@@ -2,7 +2,7 @@ package FiveStage
 import chisel3._
 import chisel3.experimental.MultiIOModule
 
-class IFBarrier extends MultiIOModule {
+class InstructionFetchBarrier extends MultiIOModule {
 
 	val io = IO(
     new Bundle {
