@@ -10,7 +10,6 @@ class InstructionDecode extends MultiIOModule {
   val testHarness = IO(
     new Bundle {
       val registerSetup = Input(new RegisterSetupSignals)
-      val instruction = Input(new Instruction)
       val registerPeek  = Output(UInt(32.W))
 
       val testUpdates   = Output(new RegisterUpdates)
@@ -22,6 +21,7 @@ class InstructionDecode extends MultiIOModule {
       /**
         * TODO: Your code here.
         */
+      val instruction = Input(new Instruction)
     }
   )
 
@@ -40,6 +40,8 @@ class InstructionDecode extends MultiIOModule {
   /**
     * TODO: Your code here.
     */
+  decoder.instruction := io.instruction
+
   registers.io.readAddress1 := 0.U
   registers.io.readAddress2 := 0.U
   registers.io.writeEnable  := false.B
