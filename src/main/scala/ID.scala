@@ -42,11 +42,15 @@ class InstructionDecode extends MultiIOModule {
     */
   decoder.instruction := io.instruction
 
-  registers.io.readAddress1 := 0.U
-  registers.io.readAddress2 := 0.U
+  registers.io.readAddress1 := instruction.registerRs1
+  registers.io.readAddress2 := instruction.registerRs2
+  registers.io.writeAddress := instruction.registerRd
+
+  // registers.io.readAddress1 := 0.U
+  // registers.io.readAddress2 := 0.U
   registers.io.writeEnable  := false.B
-  registers.io.writeAddress := 0.U
+  // registers.io.writeAddress := 0.U
   registers.io.writeData    := 0.U
 
-  decoder.instruction := 0.U.asTypeOf(new Instruction)
+  // decoder.instruction := 0.U.asTypeOf(new Instruction)
 }
