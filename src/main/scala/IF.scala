@@ -48,7 +48,7 @@ class InstructionFetch extends MultiIOModule {
 
   PC := PC + 4.U
 
-  instruction := IMEM.io.instruction
+  io.instruction := IMEM.io.instruction
   // val instruction = Wire(new Instruction)
   // instruction := IMEM.io.instruction.asTypeOf(new Instruction)
 
