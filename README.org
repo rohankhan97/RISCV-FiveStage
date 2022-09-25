@@ -1,4 +1,4 @@
-* RISCV FiveStage Processor Project (190 Points)
+* Hello RISCV FiveStage Processor Project (190 Points)
 This repository represents the RISCV Processor Project for the TDT-4255 course at NTNU. This project covers using Chisel to design a simple 32bit RISCV processor using RISCV32I integer instruction set. Please read the entire README before beginning work on this project as it will clarify many details of how the project work is to be carried out.
 
 The project itself is broken into four seperate milestones where each one adds additional functionality to the CPU. Functionality for each milestone is progressive, so it is necessary to complete earlier milestones before proceeded to subsequent ones.
