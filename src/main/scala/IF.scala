@@ -9,6 +9,7 @@ class InstructionFetch extends MultiIOModule {
     new Bundle {
       val IMEMsetup = Input(new IMEMsetupSignals)
       val PC        = Output(UInt())
+      val instruction = Output(new Instruction)
     }
   )
 
