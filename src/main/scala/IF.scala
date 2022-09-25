@@ -58,6 +58,6 @@ class InstructionFetch extends MultiIOModule {
     */
   when(testHarness.IMEMsetup.setup) {
     PC := 0.U
-    instruction := Instruction.NOP
+    io.instruction := Instruction.NOP
   }
 }
