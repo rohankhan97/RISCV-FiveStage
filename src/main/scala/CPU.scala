@@ -55,8 +55,8 @@ class CPU extends MultiIOModule {
     TODO: Your code here
     */
 
-  IFBarrier.io.PC_In := IF.io.PC
-  IFBarrier.io.instruction_In := IF.io.instruction
+  IF.io.PC := IFBarrier.PC_In
+  IF.io.instruction := IFBarrier.instruction_In
 
-  ID.io.instruction := IFBarrier.io.instruction_Out
+  IFBarrier.instruction_Out := ID.io.instruction
 }
