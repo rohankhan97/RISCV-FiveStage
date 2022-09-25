@@ -15,7 +15,7 @@ class InstructionFetchBarrier extends MultiIOModule {
 
   val PC   = RegInit(0.U(32.W))
 
-  io.PC_In := PC
+  PC := io.PC_In
 
   io.instruction_Out := io.instruction_In
   io.PC_Out := PC
