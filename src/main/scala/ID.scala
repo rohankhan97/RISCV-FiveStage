@@ -21,7 +21,8 @@ class InstructionDecode extends MultiIOModule {
       /**
         * TODO: Your code here.
         */
-      val instruction = Input(new Instruction)
+      val instruction_In = Input(new Instruction)
+      val PC_In = Input(UInt(32.W))
     }
   )
 
@@ -40,11 +41,11 @@ class InstructionDecode extends MultiIOModule {
   /**
     * TODO: Your code here.
     */
-  decoder.instruction := io.instruction
+  decoder.instruction := io.instruction_In
 
-  registers.io.readAddress1 := io.instruction.registerRs1
-  registers.io.readAddress2 := io.instruction.registerRs2
-  registers.io.writeAddress := io.instruction.registerRd
+  registers.io.readAddress1 := io.instruction_In.registerRs1
+  registers.io.readAddress2 := io.instruction_In.registerRs2
+  registers.io.writeAddress := io.instruction_In.registerRd
 
   // registers.io.readAddress1 := 0.U
   // registers.io.readAddress2 := 0.U

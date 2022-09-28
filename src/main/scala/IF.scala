@@ -48,16 +48,17 @@ class InstructionFetch extends MultiIOModule {
 
   PC := PC + 4.U
 
-  io.instruction := IMEM.io.instruction.asTypeOf(new Instruction)
-  // val instruction = Wire(new Instruction)
-  // instruction := IMEM.io.instruction.asTypeOf(new Instruction)
+  val instruction = Wire(new Instruction)
+  instruction := IMEM.io.instruction.asTypeOf(new Instruction)
 
+  // io.instruction := IMEM.io.instruction.asTypeOf(new Instruction)
+  io.instruction := instruction
 
   /**
     * Setup. You should not change this code.
     */
   when(testHarness.IMEMsetup.setup) {
     PC := 0.U
-    io.instruction := Instruction.NOP
+    instruction := Instruction.NOP
   }
 }
