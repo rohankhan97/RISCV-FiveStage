@@ -21,10 +21,15 @@ class Execute extends MultiIOModule {
       /**
         * TODO: Your code here.
         */
+      val controlSignals_In = Input(new ControlSignals)
+
       val op1 = Input(UInt(32.W))
       val op2 = Input(UInt(32.W))
       val aluOp = Input(UInt(.W))
       val aluResult = Output(UInt(32.W))
+
+      val controlSignals_Out = Output(new ControlSignals)
+
     }
   )
 
@@ -55,5 +60,6 @@ class Execute extends MultiIOModule {
 
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
 
+  io.controlSignals_Out := io.controlSignals_In
  
 }

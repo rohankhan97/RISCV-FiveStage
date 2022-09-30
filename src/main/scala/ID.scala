@@ -23,6 +23,16 @@ class InstructionDecode extends MultiIOModule {
         */
       val instruction_In = Input(new Instruction)
       val PC_In = Input(UInt(32.W))
+
+      val controlSignals = Output(new ControlSignals)
+      val branchType     = Output(UInt(3.W))
+      val op1Select      = Output(UInt(1.W))
+      val op2Select      = Output(UInt(1.W))
+      val immType        = Output(UInt(3.W))
+      val ALUop          = Output(UInt(4.W))
+
+      val readData1    = Output(UInt(32.W))
+      val readData2    = Output(UInt(32.W))
     }
   )
 
@@ -54,4 +64,14 @@ class InstructionDecode extends MultiIOModule {
   registers.io.writeData    := 0.U
 
   // decoder.instruction := 0.U.asTypeOf(new Instruction)
+
+  io.controlSignals := decoder.controlSignals
+  io.branchType     := decoder.branchType    
+  io.op1Select      := decoder.op1Select     
+  io.op2Select      := decoder.op2Select     
+  io.immType        := decoder.immType       
+  io.ALUop          := decoder.ALUop      
+
+  io.readData1 := registers.readData1  
+  io.readData2 := registers.readData2
 }
