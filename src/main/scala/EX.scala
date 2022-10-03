@@ -35,16 +35,16 @@ class Execute extends MultiIOModule {
 
   val ALUOpMap = Array(
     ALUOps.ADD      -> (io.op1 + io.op2),
-    SUB      -> (io.op1 - io.op2),
-    AND      -> (io.op1 & io.op2),
-    OR       -> (io.op1 | io.op2),
-    XOR      -> (io.op1 ^ io.op2),
-    XOR      -> (io.op1 ^ io.op2),
-    SLT      -> (io.op1 < io.op2),
-    SLL      -> (io.op1 << io.op2),
-    SLTU     -> (io.op1 < io.op2),
-    SRL      -> (io.op1 >> io.op2),
-    SRA      -> (io.op1 >>> io.op2)
+    ALUOps.SUB      -> (io.op1 - io.op2),
+    ALUOps.AND      -> (io.op1 & io.op2),
+    ALUOps.OR       -> (io.op1 | io.op2),
+    ALUOps.XOR      -> (io.op1 ^ io.op2),
+    ALUOps.XOR      -> (io.op1 ^ io.op2),
+    ALUOps.SLT      -> (io.op1 < io.op2),
+    ALUOps.SLL      -> (io.op1 << io.op2),
+    ALUOps.SLTU     -> (io.op1 < io.op2),
+    ALUOps.SRL      -> (io.op1 >> io.op2),
+    ALUOps.SRA      -> (io.op1 >>> io.op2)
     )
 
   // val registers = Module(new Registers)
