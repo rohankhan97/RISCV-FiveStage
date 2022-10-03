@@ -15,7 +15,8 @@ class ExecuteBarrier extends MultiIOModule {
       val dataAddress_Out    = Output(UInt(12.W))
     })
 
-  val controlSignals   = RegInit(0.U(5.W))
+  // val controlSignals   = RegInit(0.U(5.W))
+  val controlSignals   = Wire(new ControlSignals)
   val dataIn           = RegInit(0.U(32.W))
   val dataAddress      = RegInit(0.U(32.W))
 
