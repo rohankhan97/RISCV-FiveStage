@@ -34,7 +34,7 @@ class Execute extends MultiIOModule {
   )
 
   val ALUOpMap = Array(
-    ADD      -> (io.op1 + io.op2),
+    ALUOps.ADD      -> (io.op1 + io.op2),
     SUB      -> (io.op1 - io.op2),
     AND      -> (io.op1 & io.op2),
     OR       -> (io.op1 | io.op2),
