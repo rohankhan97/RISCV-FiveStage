@@ -24,13 +24,13 @@ class CPU extends MultiIOModule {
   val IFBarrier  = Module(new InstructionFetchBarrier).io
   val IDBarrier  = Module(new InstructionDecodeBarrier).io
   val EXBarrier  = Module(new ExecuteBarrier).io
-  // val MEMBarrier = Module(new MEMBarrier).io
+  val MEMBarrier = Module(new MemoryBarrier).io
 
   val ID  = Module(new InstructionDecode)
   val IF  = Module(new InstructionFetch)
   val EX  = Module(new Execute)
   val MEM = Module(new MemoryFetch)
-  // val WB  = Module(new Execute) (You may not need this one?)
+  val WB  = Module(new WriteBacK) //(You may not need this one?)
 
 
   /**
@@ -65,6 +65,9 @@ class CPU extends MultiIOModule {
   ID.io.instruction_In := IFBarrier.instruction_Out
   ID.io.PC_In := IFBarrier.PC_Out
 
+  ID.io.controlSignals2 := WB.io.controlSignals_Out
+  ID.io.writeData       := WB.io.aluResult_Out
+
 
   //////////////////////////////////////////////////////////////////////
   ////////////// Barrier Between ID and EX /////////////////////////////
@@ -94,7 +97,20 @@ class CPU extends MultiIOModule {
   EXBarrier.dataIn_In         := IDBarrier.readData2_Out
   EXBarrier.dataAddress_In    := EX.io.aluResult
 
-  MEM.io.controlSignals   := EXBarrier.controlSignals_Out
-  MEM.io.dataIn           := EXBarrier.dataIn_Out
-  MEM.io.dataAddress      := EXBarrier.dataAddress_Out
+  MEM.io.controlSignals_In := EXBarrier.controlSignals_Out
+  MEM.io.dataIn            := EXBarrier.dataIn_Out
+  MEM.io.dataAddress       := EXBarrier.dataAddress_Out
+
+
+  //////////////////////////////////////////////////////////////////////
+  ////////////// Barrier Between MEM and WB ////////////////////////////
+  //////////////////////////////////////////////////////////////////////
+
+  MEMBarrier.aluResult_In       := EX.io.aluResult
+  MEMBarrier.dataOut_In         := MEM.io.dataOut
+  MEMBarrier.controlSignals_In  := MEM.io.controlSignals_Out
+  
+  WB.io.aluResult_In      := MEMBarrier.aluResult_Out
+  WB.io.controlSignals_In := MEMBarrier.controlSignals_Out
+
 }
