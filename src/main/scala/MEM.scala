@@ -47,7 +47,7 @@ class MemoryFetch() extends MultiIOModule {
 
   DMEM.io.dataIn      := io.dataIn     
   DMEM.io.dataAddress := io.dataAddress
-  DMEM.io.writeEnable := io.controlSignals.memWrite
+  DMEM.io.writeEnable := io.controlSignals_In.memWrite
 
   io.controlSignals_Out := io.controlSignals_In
   io.dataOut            := DMEM.io.dataOut
