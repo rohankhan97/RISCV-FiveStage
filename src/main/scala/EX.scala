@@ -25,7 +25,7 @@ class Execute extends MultiIOModule {
 
       val op1 = Input(UInt(32.W))
       val op2 = Input(UInt(32.W))
-      val aluOp = Input(UInt(.W))
+      val aluOp = Input(UInt(4.W))
       val aluResult = Output(UInt(32.W))
 
       val controlSignals_Out = Output(new ControlSignals)
