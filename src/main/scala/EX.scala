@@ -43,8 +43,8 @@ class Execute extends MultiIOModule {
     ALUOps.SLT      -> (io.op1 < io.op2),
     ALUOps.SLL      -> (io.op1 << io.op2),
     ALUOps.SLTU     -> (io.op1 < io.op2),
-    ALUOps.SRL      -> (io.op1 >> io.op2),
-    ALUOps.SRA      -> (io.op1 >>> io.op2)
+    ALUOps.SRL      -> (io.op1 >> io.op2)
+    // ALUOps.SRA      -> (io.op1 >>> io.op2)
     )
 
   // val registers = Module(new Registers)
