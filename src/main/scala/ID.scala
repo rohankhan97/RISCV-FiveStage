@@ -25,7 +25,7 @@ class InstructionDecode extends MultiIOModule {
       val PC_In = Input(UInt(32.W))
 
       val controlSignals2 = Input(new ControlSignals)
-      val writeData = Input(UInt(32.W))
+      val writeData = Input(SInt(32.W))
 
       val controlSignals = Output(new ControlSignals)
       val branchType     = Output(UInt(3.W))
