@@ -23,9 +23,9 @@ class Execute extends MultiIOModule {
         */
       val controlSignals_In = Input(new ControlSignals)
 
-      val readData1 = Input(UInt(32.W))
-      val readData2 = Input(UInt(32.W))
-      val immediate = Input(UInt(32.W))
+      val readData1 = Input(SInt(32.W))
+      val readData2 = Input(SInt(32.W))
+      val immediate = Input(SInt(32.W))
       val op1Select = Input(UInt(1.W))
       val op2Select = Input(UInt(1.W))
       val aluOp = Input(UInt(4.W))
@@ -46,7 +46,7 @@ class Execute extends MultiIOModule {
     Op2Select.imm      -> io.immediate
     )
 
-  op2 := MuxLookup(io.op2Select, 0.U(32.W), op2Map)
+  op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
 
   // when(io.op2Select){
   //   op2 := io.immediate
