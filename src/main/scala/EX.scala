@@ -39,12 +39,12 @@ class Execute extends MultiIOModule {
   val op1 = Wire(UInt(32.W))
   val op2 = Wire(UInt(32.W))
 
-  op1 := readData1
+  op1 := io.readData1
 
   when(io.op2Select){
-    op2 := immediate
+    op2 := io.immediate
   }.otherwise{
-    op2 := readData2
+    op2 := io.readData2
   }
 
   val ALUOpMap = Array(
