@@ -67,6 +67,7 @@ class CPU extends MultiIOModule {
 
   ID.io.controlSignals2 := WB.io.controlSignals_Out
   ID.io.writeData       := WB.io.aluResult_Out
+  ID.io.rdAddress_In    := MEMBarrier.rdAddress_Out
 
 
   //////////////////////////////////////////////////////////////////////
@@ -83,10 +84,12 @@ class CPU extends MultiIOModule {
   IDBarrier.readData1_In      := ID.io.readData1
   IDBarrier.readData2_In      := ID.io.readData2
   IDBarrier.immediate_In      := ID.io.immediate
+  IDBarrier.rdAddress_In      := ID.io.rdAddress
 
   EX.io.readData1         := IDBarrier.readData1_Out
   EX.io.readData2         := IDBarrier.readData2_Out
   EX.io.immediate         := IDBarrier.immediate_Out
+  EX.io.rdAddress_In      := IDBarrier.rdAddress_Out
   EX.io.op1Select         := IDBarrier.op1Select_Out
   EX.io.op2Select         := IDBarrier.op2Select_Out
   EX.io.aluOp             := IDBarrier.ALUop_Out
@@ -100,10 +103,12 @@ class CPU extends MultiIOModule {
   EXBarrier.controlSignals_In := EX.io.controlSignals_Out
   EXBarrier.dataIn_In         := IDBarrier.readData2_Out
   EXBarrier.dataAddress_In    := EX.io.aluResult.asUInt
+  EXBarrier.rdAddress_In      := EX.io.rdAddress_Out
 
   MEM.io.controlSignals_In := EXBarrier.controlSignals_Out
   MEM.io.dataIn            := EXBarrier.dataIn_Out
   MEM.io.dataAddress       := EXBarrier.dataAddress_Out
+  MEM.io.rdAddress_In      := EXBarrier.rdAddress_Out
 
 
   //////////////////////////////////////////////////////////////////////
@@ -113,6 +118,7 @@ class CPU extends MultiIOModule {
   MEMBarrier.aluResult_In       := EX.io.aluResult
   MEMBarrier.dataOut_In         := MEM.io.dataOut
   MEMBarrier.controlSignals_In  := MEM.io.controlSignals_Out
+  MEMBarrier.rdAddress_In       := MEM.io.rdAddress_Out
   
   WB.io.aluResult_In      := MEMBarrier.aluResult_Out
   WB.io.controlSignals_In := MEMBarrier.controlSignals_Out

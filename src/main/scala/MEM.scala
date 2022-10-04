@@ -22,6 +22,9 @@ class MemoryFetch() extends MultiIOModule {
       val dataIn            = Input(UInt(32.W))
       val dataAddress       = Input(UInt(12.W))
 
+      val rdAddress_In      = Input(UInt(5.W))
+      val rdAddress_Out     = Output(UInt(5.W))
+
       val controlSignals_Out = Output(new ControlSignals)
       val dataOut            = Output(UInt(32.W))
     })
@@ -51,4 +54,7 @@ class MemoryFetch() extends MultiIOModule {
 
   io.controlSignals_Out := io.controlSignals_In
   io.dataOut            := DMEM.io.dataOut
+
+  io.rdAddress_Out := io.rdAddress_In
+
 }

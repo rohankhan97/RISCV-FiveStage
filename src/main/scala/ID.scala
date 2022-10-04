@@ -26,6 +26,7 @@ class InstructionDecode extends MultiIOModule {
 
       val controlSignals2 = Input(new ControlSignals)
       val writeData = Input(SInt(32.W))
+      val rdAddress_In = Input(SInt(32.W))
 
       val controlSignals = Output(new ControlSignals)
       val branchType     = Output(UInt(3.W))
@@ -38,6 +39,7 @@ class InstructionDecode extends MultiIOModule {
       val readData2    = Output(UInt(32.W))
 
       val immediate    = Output(SInt(32.W))
+      val rdAddress    = Output(UInt(5.W))
     }
   )
 
@@ -59,7 +61,8 @@ class InstructionDecode extends MultiIOModule {
 
   registers.io.readAddress1 := io.instruction_In.registerRs1
   registers.io.readAddress2 := io.instruction_In.registerRs2
-  registers.io.writeAddress := io.instruction_In.registerRd
+  // registers.io.writeAddress := io.instruction_In.registerRd
+  registers.io.writeAddress := io.rdAddress_In
   registers.io.writeData    := io.writeData.asUInt
   registers.io.writeEnable  := io.controlSignals2.regWrite
 
@@ -80,6 +83,8 @@ class InstructionDecode extends MultiIOModule {
 
   io.readData1 := registers.io.readData1  
   io.readData2 := registers.io.readData2
+
+  io.rdAddress := io.instruction_In.registerRd
 
   val immMap = Array(
     // ALUOps.ADD      -> (io.op1 + io.op2),
