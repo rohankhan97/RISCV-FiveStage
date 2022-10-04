@@ -74,6 +74,7 @@ class Execute extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
+  val rdAddress = RegInit(0.U(5.W))
 
   /**
     * Setup. You should not change this code
@@ -86,6 +87,7 @@ class Execute extends MultiIOModule {
 
   io.controlSignals_Out := io.controlSignals_In
 
-  io.rdAddress_Out := io.rdAddress_In
+  rdAddress := io.rdAddress_In
+  io.rdAddress_Out := rdAddress
  
 }
