@@ -42,8 +42,8 @@ class Execute extends MultiIOModule {
   op1 := io.readData1
 
   val op2Map = Array(
-    Op2Select.rs2      -> readData2,
-    Op2Select.imm      -> immediate
+    Op2Select.rs2      -> io.readData2,
+    Op2Select.imm      -> io.immediate
     )
 
   op2 := MuxLookup(io.op2Select, 0.U(32.W), op2Map)
