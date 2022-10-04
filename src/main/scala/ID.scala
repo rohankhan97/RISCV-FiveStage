@@ -60,7 +60,7 @@ class InstructionDecode extends MultiIOModule {
   registers.io.readAddress1 := io.instruction_In.registerRs1
   registers.io.readAddress2 := io.instruction_In.registerRs2
   registers.io.writeAddress := io.instruction_In.registerRd
-  registers.io.writeData    := io.writeData
+  registers.io.writeData    := io.writeData.asUInt
   registers.io.writeEnable  := io.controlSignals2.regWrite
 
   // registers.io.readAddress1 := 0.U

@@ -23,8 +23,8 @@ class Execute extends MultiIOModule {
         */
       val controlSignals_In = Input(new ControlSignals)
 
-      val readData1 = Input(SInt(32.W))
-      val readData2 = Input(SInt(32.W))
+      val readData1 = Input(UInt(32.W))
+      val readData2 = Input(UInt(32.W))
       val immediate = Input(SInt(32.W))
       val op1Select = Input(UInt(1.W))
       val op2Select = Input(UInt(1.W))
@@ -39,7 +39,7 @@ class Execute extends MultiIOModule {
   val op1 = Wire(SInt(32.W))
   val op2 = Wire(SInt(32.W))
 
-  op1 := io.readData1
+  op1 := io.readData1.asSInt
 
   // val op2Map = Array(
   //   Op2Select.rs2      -> io.readData2,

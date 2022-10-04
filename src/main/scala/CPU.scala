@@ -99,7 +99,7 @@ class CPU extends MultiIOModule {
 
   EXBarrier.controlSignals_In := EX.io.controlSignals_Out
   EXBarrier.dataIn_In         := IDBarrier.readData2_Out
-  EXBarrier.dataAddress_In    := EX.io.aluResult
+  EXBarrier.dataAddress_In    := EX.io.aluResult.asUInt
 
   MEM.io.controlSignals_In := EXBarrier.controlSignals_Out
   MEM.io.dataIn            := EXBarrier.dataIn_Out
