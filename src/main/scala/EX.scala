@@ -80,7 +80,7 @@ class Execute extends MultiIOModule {
   // testHarness.registerPeek    := registers.io.readData1
   // testHarness.testUpdates     := registers.testHarness.testUpdates
 
-  io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
+  io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
 
   io.controlSignals_Out := io.controlSignals_In
  
