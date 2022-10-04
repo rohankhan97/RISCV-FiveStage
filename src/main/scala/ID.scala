@@ -36,12 +36,13 @@ class InstructionDecode extends MultiIOModule {
 
       val readData1    = Output(UInt(32.W))
       val readData2    = Output(UInt(32.W))
+
+      val immediate    = Output(UInt(32.W))
     }
   )
 
   val registers = Module(new Registers)
   val decoder   = Module(new Decoder).io
-
 
   /**
     * Setup. You should not change this code
@@ -79,4 +80,13 @@ class InstructionDecode extends MultiIOModule {
 
   io.readData1 := registers.io.readData1  
   io.readData2 := registers.io.readData2
+  val immMap = Array(
+    // ALUOps.ADD      -> (io.op1 + io.op2),
+    ImmFormat.ITYPE   -> (io.instruction_In.immediateIType),
+    ImmFormat.STYPE   -> (io.instruction_In.immediateSType)
+    )
+
+
+  io.immediate := MuxLookup(decoder.immType, 0.U(32.W), immMap)
+
 }
