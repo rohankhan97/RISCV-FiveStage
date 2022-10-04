@@ -60,10 +60,10 @@ class Execute extends MultiIOModule {
     ALUOps.SUB      -> (op1 - op2),
     ALUOps.AND      -> (op1 & op2),
     ALUOps.OR       -> (op1 | op2),
-    ALUOps.XOR      -> (op1 ^ op2),
-    ALUOps.SLT      -> (op1 < op2),
+    ALUOps.XOR      -> (op1 ^ op2)
+    // ALUOps.SLT      -> (op1 < op2),
     // ALUOps.SLL      -> (io.op1 << io.op2),
-    ALUOps.SLTU     -> (op1 < op2)
+    // ALUOps.SLTU     -> (op1 < op2)
     // ALUOps.SRL      -> (io.op1 >> io.op2)
     // ALUOps.SRA      -> (io.op1 >>> io.op2)
     )
