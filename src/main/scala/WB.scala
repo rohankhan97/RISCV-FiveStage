@@ -22,10 +22,10 @@ class WriteBacK extends MultiIOModule {
         * TODO: Your code here.
         */
       val controlSignals_In = Input(new ControlSignals)
-      val aluResult_In = Input(UInt(32.W))
+      val aluResult_In = Input(SInt(32.W))
 
       val controlSignals_Out = Output(new ControlSignals)
-      val aluResult_Out = Output(UInt(32.W))
+      val aluResult_Out = Output(SInt(32.W))
 
     }
   )
