@@ -15,7 +15,7 @@ class Instruction extends Bundle(){
   def funct7      = instruction(31, 25)
   def funct6      = instruction(26, 31)
 
-  def immediateIType = instruction(31, 20).asUInt
+  def immediateIType = instruction(31, 20).asSInt
   def immediateSType = Cat(instruction(31, 25), instruction(11,7)).asSInt
   def immediateBType = Cat(instruction(31), instruction(7), instruction(30, 25), instruction(11, 8), 0.U(1.W)).asSInt
   def immediateUType = Cat(instruction(31, 12), 0.U(12.W)).asSInt

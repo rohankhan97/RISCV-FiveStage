@@ -80,6 +80,7 @@ class InstructionDecode extends MultiIOModule {
 
   io.readData1 := registers.io.readData1  
   io.readData2 := registers.io.readData2
+  
   val immMap = Array(
     // ALUOps.ADD      -> (io.op1 + io.op2),
     ImmFormat.ITYPE   -> (io.instruction_In.immediateIType),
