@@ -23,8 +23,11 @@ class Execute extends MultiIOModule {
         */
       val controlSignals_In = Input(new ControlSignals)
 
-      val op1 = Input(UInt(32.W))
-      val op2 = Input(UInt(32.W))
+      val readData1 = Input(UInt(32.W))
+      val readData2 = Input(UInt(32.W))
+      val immediate = Input(UInt(32.W))
+      val op1Select = Input(UInt(1.W))
+      val op2Select = Input(UInt(1.W))
       val aluOp = Input(UInt(4.W))
       val aluResult = Output(UInt(32.W))
 
@@ -33,16 +36,27 @@ class Execute extends MultiIOModule {
     }
   )
 
+  val op1 = Wire(UInt(32.W))
+  val op2 = Wire(UInt(32.W))
+
+  op1 := readData1
+
+  when(io.op2Select){
+    op2 := immediate
+  }.otherwise{
+    op2 := readData2
+  }
+
   val ALUOpMap = Array(
-    ALUOps.ADD      -> (io.op1 + io.op2),
-    ALUOps.SUB      -> (io.op1 - io.op2),
-    ALUOps.AND      -> (io.op1 & io.op2),
-    ALUOps.OR       -> (io.op1 | io.op2),
-    ALUOps.XOR      -> (io.op1 ^ io.op2),
-    ALUOps.XOR      -> (io.op1 ^ io.op2),
-    ALUOps.SLT      -> (io.op1 < io.op2),
+    ALUOps.ADD      -> (op1 + op2),
+    ALUOps.SUB      -> (op1 - op2),
+    ALUOps.AND      -> (op1 & op2),
+    ALUOps.OR       -> (op1 | op2),
+    ALUOps.XOR      -> (op1 ^ op2),
+    ALUOps.XOR      -> (op1 ^ op2),
+    ALUOps.SLT      -> (op1 < op2),
     // ALUOps.SLL      -> (io.op1 << io.op2),
-    ALUOps.SLTU     -> (io.op1 < io.op2)
+    ALUOps.SLTU     -> (op1 < op2)
     // ALUOps.SRL      -> (io.op1 >> io.op2)
     // ALUOps.SRA      -> (io.op1 >>> io.op2)
     )

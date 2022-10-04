@@ -83,7 +83,11 @@ class InstructionDecode extends MultiIOModule {
   val immMap = Array(
     // ALUOps.ADD      -> (io.op1 + io.op2),
     ImmFormat.ITYPE   -> (io.instruction_In.immediateIType),
-    ImmFormat.STYPE   -> (io.instruction_In.immediateSType)
+    ImmFormat.STYPE   -> (io.instruction_In.immediateSType),
+    ImmFormat.BTYPE   -> (io.instruction_In.immediateBType),
+    ImmFormat.UTYPE   -> (io.instruction_In.immediateUType),
+    ImmFormat.JTYPE   -> (io.instruction_In.immediateJType),
+    ImmFormat.SHAMT   -> (io.instruction_In.immediateZType)
     )
 
 

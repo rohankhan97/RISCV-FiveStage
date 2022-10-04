@@ -15,6 +15,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
 
       val readData1_In    = Input(UInt(32.W))
       val readData2_In    = Input(UInt(32.W))
+      val immediate_In    = Input(UInt(32.W))
 
       val controlSignals_Out = Output(new ControlSignals)
       val branchType_Out     = Output(UInt(3.W))
@@ -25,6 +26,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
 
       val readData1_Out    = Output(UInt(32.W))
       val readData2_Out    = Output(UInt(32.W))
+      val immediate_Out    = Output(UInt(32.W))
     })
 
   // val controlSignals   = RegInit(0.U(5.W)) 
@@ -36,6 +38,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   val ALUop            = RegInit(0.U(4.W))
   val readData1        = RegInit(0.U(32.W))
   val readData2        = RegInit(0.U(32.W))
+  val immediate        = RegInit(0.U(32.W))
 
 
   controlSignals  := io.controlSignals_In
@@ -47,6 +50,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
 
   readData1       := io.readData1_In
   readData2       := io.readData2_In
+  immediate       := io.immediate_In
 
   io.controlSignals_Out  := controlSignals
   io.branchType_Out      := branchType    
@@ -57,5 +61,6 @@ class InstructionDecodeBarrier extends MultiIOModule {
 
   io.readData1_Out       := readData1     
   io.readData2_Out       := readData2     
+  io.immediate_Out       := immediate     
 
 }
