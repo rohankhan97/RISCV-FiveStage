@@ -40,6 +40,8 @@ class InstructionDecode extends MultiIOModule {
 
       val immediate    = Output(SInt(32.W))
       val rdAddress    = Output(UInt(5.W))
+
+      val PC_Out       = Output(UInt(32.W))
     }
   )
 
@@ -98,5 +100,7 @@ class InstructionDecode extends MultiIOModule {
 
 
   io.immediate := MuxLookup(decoder.immType, 0.S(32.W), immMap)
+
+  io.PC_Out := io.PC_In
 
 }

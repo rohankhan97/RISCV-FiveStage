@@ -87,10 +87,12 @@ class CPU extends MultiIOModule {
   IDBarrier.readData2_In      := ID.io.readData2
   IDBarrier.immediate_In      := ID.io.immediate
   IDBarrier.rdAddress_In      := ID.io.rdAddress
+  IDBarrier.PC_In             := ID.io.PC_Out
 
   EX.io.readData1         := IDBarrier.readData1_Out
   EX.io.readData2         := IDBarrier.readData2_Out
   EX.io.immediate         := IDBarrier.immediate_Out
+  EX.io.PC_In             := IDBarrier.PC_Out
   EX.io.rdAddress_In      := IDBarrier.rdAddress_Out
   EX.io.op1Select         := IDBarrier.op1Select_Out
   EX.io.op2Select         := IDBarrier.op2Select_Out
