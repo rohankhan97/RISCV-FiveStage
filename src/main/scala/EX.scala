@@ -43,21 +43,21 @@ class Execute extends MultiIOModule {
   val op2 = Wire(SInt(32.W))
 
   op1 := io.readData1.asSInt
-  op22 := io.readData2.asSInt
+  // op22 := io.readData2.asSInt
 
-  val op2Map = Array(
-    Op2Select.rs2      -> op22,
-    Op2Select.imm      -> io.immediate
-    )
+  // val op2Map = Array(
+  //   Op2Select.rs2      -> op22,
+  //   Op2Select.imm      -> io.immediate
+  //   )
 
-  op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
+  // op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
   // op2 := io.immediate
 
-  // when(io.op2Select){
-  //   op2 := io.immediate
-  // }.otherwise{
-  //   op2 := io.readData2
-  // }
+  when(io.op2Select.asBool){
+    op2 := io.immediate
+  }.otherwise{
+    op2 := io.readData2.asSInt
+  }
 
   val ALUOpMap = Array(
     ALUOps.ADD      -> (op1 + op2),
