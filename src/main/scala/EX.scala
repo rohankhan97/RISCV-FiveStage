@@ -71,7 +71,7 @@ class Execute extends MultiIOModule {
     ALUOps.AND      -> (op1 & op2),
     ALUOps.OR       -> (op1 | op2),
     ALUOps.XOR      -> (op1 ^ op2),
-    ALUOps.SLT      -> ((op1 < op2)(0).asSInt),
+    ALUOps.SLT      -> (op1 < op2).asSInt,
     ALUOps.SLTU     -> (op1.asUInt < op2.asUInt).asSInt,
     ALUOps.SLL      -> (op1.asUInt << op2(4, 0).asUInt).asSInt,
     ALUOps.SRL      -> (op1.asUInt >> op2(4, 0).asUInt).asSInt,
@@ -81,7 +81,8 @@ class Execute extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
-  
+  val reg = RegInit(UInt(32.W))
+  reg := op1 < op2
 
   /**
     * Setup. You should not change this code
