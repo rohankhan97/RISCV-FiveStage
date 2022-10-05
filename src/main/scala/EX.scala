@@ -44,13 +44,13 @@ class Execute extends MultiIOModule {
 
   op1 := io.readData1.asSInt
 
-  // val op2Map = Array(
-  //   Op2Select.rs2      -> io.readData2,
-  //   Op2Select.imm      -> io.immediate
-  //   )
+  val op2Map = Array(
+    Op2Select.rs2      -> io.readData2.asSInt,
+    Op2Select.imm      -> io.immediate
+    )
 
-  // op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
-  op2 := io.immediate
+  op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
+  // op2 := io.immediate
 
   // when(io.op2Select){
   //   op2 := io.immediate
@@ -63,11 +63,11 @@ class Execute extends MultiIOModule {
     ALUOps.SUB      -> (op1 - op2),
     ALUOps.AND      -> (op1 & op2),
     ALUOps.OR       -> (op1 | op2),
-    ALUOps.XOR      -> (op1 ^ op2)
-    // ALUOps.SLT      -> (op1 < op2),
-    // ALUOps.SLL      -> (io.op1 << io.op2),
-    // ALUOps.SLTU     -> (op1 < op2)
-    // ALUOps.SRL      -> (io.op1 >> io.op2)
+    ALUOps.XOR      -> (op1 ^ op2),
+    ALUOps.SLT      -> (op1 < op2),
+    ALUOps.SLL      -> (io.op1 << io.op2),
+    ALUOps.SLTU     -> (op1 < op2),
+    ALUOps.SRL      -> (io.op1 >> io.op2)
     // ALUOps.SRA      -> (io.op1 >>> io.op2)
     )
 
