@@ -119,7 +119,7 @@ class CPU extends MultiIOModule {
   ////////////// Barrier Between MEM and WB ////////////////////////////
   //////////////////////////////////////////////////////////////////////
 
-  MEMBarrier.aluResult_In       := EX.io.aluResult
+  MEMBarrier.aluResult_In       := EX.io.aluResult.asSInt
   MEMBarrier.rdAddress_In       := EX.io.rdAddress_Out
   MEMBarrier.dataOut_In         := MEM.io.dataOut
   MEMBarrier.controlSignals_In  := MEM.io.controlSignals_Out

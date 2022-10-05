@@ -30,7 +30,7 @@ class Execute extends MultiIOModule {
       val op1Select = Input(UInt(1.W))
       val op2Select = Input(UInt(1.W))
       val aluOp = Input(UInt(4.W))
-      val aluResult = Output(SInt(32.W))
+      val aluResult = Output(UInt(32.W))
 
       val rdAddress_In  = Input(UInt(5.W))
       val rdAddress_Out = Output(UInt(5.W))
@@ -90,7 +90,7 @@ class Execute extends MultiIOModule {
   // testHarness.registerPeek    := registers.io.readData1
   // testHarness.testUpdates     := registers.testHarness.testUpdates
 
-  io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
+  io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap).asUInt
 
   io.controlSignals_Out := io.controlSignals_In
 
