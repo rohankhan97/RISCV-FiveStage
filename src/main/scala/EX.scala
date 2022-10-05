@@ -44,7 +44,7 @@ class Execute extends MultiIOModule {
   val op2 = Wire(SInt(32.W))
 
   val op1Map = Array(
-    Op1Select.rs1      -> io.readData2.asSInt,
+    Op1Select.rs1      -> io.readData1.asSInt,
     Op1Select.PC      -> io.PC_In.asSInt
     )
 
