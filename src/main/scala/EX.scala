@@ -68,7 +68,7 @@ class Execute extends MultiIOModule {
     ALUOps.SLT      -> (op1 < op2).asSInt,
     ALUOps.SLL      -> (op1 << op2.asUInt),
     ALUOps.SLTU     -> (op1 < op2).asSInt,
-    ALUOps.SRL      -> (op1.asUInt >> op2.asUInt),
+    ALUOps.SRL      -> (op1.asUInt >> op2.asUInt).asSInt,
     ALUOps.SRA      -> (op1 >> op2.asUInt)
     )
 
