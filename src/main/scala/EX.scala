@@ -81,7 +81,7 @@ class Execute extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
-  val reg = RegInit(UInt(32.W))
+  val reg = RegInit(0.U(32.W))
   reg := op1 < op2
 
   /**
