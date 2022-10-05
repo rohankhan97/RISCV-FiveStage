@@ -51,13 +51,13 @@ class Execute extends MultiIOModule {
   //   )
 
   // op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
-  // op2 := io.immediate
+  op2 := io.immediate
 
-  when(io.op2Select.asBool){
-    op2 := io.immediate
-  }.otherwise{
-    op2 := io.readData2
-  }
+  // when(io.op2Select.asBool){
+  //   op2 := io.immediate
+  // }.otherwise{
+  //   op2 := io.readData2
+  // }
 
   val ALUOpMap = Array(
     ALUOps.ADD      -> (op1 + op2),
