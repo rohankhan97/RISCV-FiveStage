@@ -124,7 +124,8 @@ class CPU extends MultiIOModule {
 
   MEMBarrier.aluResult_In       := EXBarrier.dataAddress_Out
   // MEMBarrier.aluResult_In       := EX.io.aluResult
-  MEMBarrier.rdAddress_In       := EX.io.rdAddress_Out
+  // MEMBarrier.rdAddress_In       := EX.io.rdAddress_Out
+  MEMBarrier.rdAddress_In       := MEM.io.rdAddress_Out
   MEMBarrier.dataOut_In         := MEM.io.dataOut
   MEMBarrier.controlSignals_In  := MEM.io.controlSignals_Out
   
