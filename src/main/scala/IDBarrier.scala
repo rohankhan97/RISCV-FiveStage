@@ -33,8 +33,8 @@ class InstructionDecodeBarrier extends MultiIOModule {
       val PC_Out           = Output(UInt(32.W))
     })
 
-  // val controlSignals   = RegInit(0.U(5.W)) 
-  val controlSignals   = Wire(new ControlSignals)
+  val controlSignals   = RegInit(0.U(6.W)) 
+  // val controlSignals   = Wire(new ControlSignals)
   val branchType       = RegInit(0.U(3.W))
   val op1Select        = RegInit(0.U(1.W))
   val op2Select        = RegInit(0.U(1.W))
@@ -47,7 +47,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   val PC               = RegInit(0.U(32.W))
 
 
-  controlSignals  := io.controlSignals_In
+  controlSignals  := io.controlSignals_In.asUInt
   branchType      := io.branchType_In
   op1Select       := io.op1Select_In
   op2Select       := io.op2Select_In
@@ -60,7 +60,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   rdAddress       := io.rdAddress_In
   PC              := io.PC_In
 
-  io.controlSignals_Out  := controlSignals
+  io.controlSignals_Out  := controlSignals.asTypeOf(new ControlSignals)
   io.branchType_Out      := branchType    
   io.op1Select_Out       := op1Select     
   io.op2Select_Out       := op2Select     
