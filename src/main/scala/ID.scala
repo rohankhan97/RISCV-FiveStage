@@ -25,8 +25,8 @@ class InstructionDecode extends MultiIOModule {
       val PC_In = Input(UInt(32.W))
 
       val controlSignals2 = Input(new ControlSignals)
-      val writeData = Input(SInt(32.W))
-      val rdAddress_In = Input(UInt(5.W))
+      val writeData       = Input(UInt(32.W))
+      val rdAddress_In    = Input(UInt(5.W))
 
       val controlSignals = Output(new ControlSignals)
       val branchType     = Output(UInt(3.W))
@@ -65,7 +65,7 @@ class InstructionDecode extends MultiIOModule {
   registers.io.readAddress2 := io.instruction_In.registerRs2
   // registers.io.writeAddress := io.instruction_In.registerRd
   registers.io.writeAddress := io.rdAddress_In
-  registers.io.writeData    := io.writeData.asUInt
+  registers.io.writeData    := io.writeData
   registers.io.writeEnable  := io.controlSignals2.regWrite
 
   // registers.io.readAddress1 := 0.U
