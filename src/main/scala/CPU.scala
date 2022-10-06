@@ -66,10 +66,13 @@ class CPU extends MultiIOModule {
   ID.io.PC_In := IFBarrier.PC_Out
 
   // ID.io.controlSignals2 := WB.io.controlSignals_Out
-  ID.io.controlSignals2 := MEMBarrier.controlSignals_Out
+  // ID.io.controlSignals2 := MEMBarrier.controlSignals_Out
+  ID.io.controlSignals2 := WB.io.controlSignals_Out
   // ID.io.writeData       := WB.io.aluResult_Out
-  ID.io.writeData       := MEMBarrier.aluResult_Out
-  ID.io.rdAddress_In    := MEMBarrier.rdAddress_Out
+  // ID.io.writeData       := MEMBarrier.aluResult_Out
+  ID.io.writeData       := WB.io.rdData_Out
+  // ID.io.rdAddress_In    := MEMBarrier.rdAddress_Out
+  ID.io.rdAddress_In    := WB.io.rdAddress_Out
 
 
   //////////////////////////////////////////////////////////////////////
@@ -127,5 +130,7 @@ class CPU extends MultiIOModule {
   
   WB.io.aluResult_In      := MEMBarrier.aluResult_Out
   WB.io.controlSignals_In := MEMBarrier.controlSignals_Out
+  WB.io.rdAddress_In      := MEMBarrier.rdAddress_Out
+  WB.io.dataOut_In        := MEMBarrier.dataOut_Out
 
 }

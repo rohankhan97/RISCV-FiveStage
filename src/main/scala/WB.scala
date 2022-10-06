@@ -22,10 +22,14 @@ class WriteBacK extends MultiIOModule {
         * TODO: Your code here.
         */
       val controlSignals_In = Input(new ControlSignals)
-      val aluResult_In = Input(SInt(32.W))
+      val aluResult_In      = Input(UInt(32.W))
+      val dataOut_In        = Input(UInt(32.W))
+      val rdAddress_In      = Input(UInt(5.W))
 
       val controlSignals_Out = Output(new ControlSignals)
-      val aluResult_Out = Output(SInt(32.W))
+      val rdData_Out         = Output(UInt(32.W))
+      // val dataOut_Out        = Output(UInt(32.W))
+      val rdAddress_Out      = Output(UInt(5.W))
 
     }
   )
@@ -41,8 +45,13 @@ class WriteBacK extends MultiIOModule {
   // testHarness.registerPeek    := registers.io.readData1
   // testHarness.testUpdates     := registers.testHarness.testUpdates
 
+  when(io.controlSignals_In.memtoReg){
+    io.rdData_Out := io.dataOut_In
+  }.otherwise{
+    io.rdData_Out := io.aluResult_In
+  }
 
   io.controlSignals_Out := io.controlSignals_In
-  io.aluResult_Out := io.aluResult_In
+  io.rdAddress_Out := io.rdAddress_In
  
 }
