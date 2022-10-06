@@ -37,6 +37,10 @@ class WriteBacK extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
+  val controlSignals   = Wire(new ControlSignals)
+
+  controlSignals  := io.controlSignals_In
+
 
   /**
     * Setup. You should not change this code
@@ -45,13 +49,14 @@ class WriteBacK extends MultiIOModule {
   // testHarness.registerPeek    := registers.io.readData1
   // testHarness.testUpdates     := registers.testHarness.testUpdates
 
-  when(io.controlSignals_In.memtoReg){
+  when(controlSignals.memtoReg){
     io.rdData_Out := io.dataOut_In
   }.otherwise{
     io.rdData_Out := io.aluResult_In
   }
 
-  io.controlSignals_Out := io.controlSignals_In
+  io.controlSignals_Out  := controlSignals
+  // io.controlSignals_Out := io.controlSignals_In
   io.rdAddress_Out := io.rdAddress_In
  
 }

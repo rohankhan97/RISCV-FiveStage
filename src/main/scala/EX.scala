@@ -94,8 +94,11 @@ class Execute extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
-  val reg = RegInit(0.U(32.W))
-  reg := op1 < op2
+  val controlSignals   = Wire(new ControlSignals)
+
+
+  // val reg = RegInit(0.U(32.W))
+  // reg := op1 < op2
 
   /**
     * Setup. You should not change this code
@@ -107,7 +110,11 @@ class Execute extends MultiIOModule {
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
   // io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
 
-  io.controlSignals_Out := io.controlSignals_In
+  // io.controlSignals_Out := io.controlSignals_In
+
+  controlSignals  := io.controlSignals_In
+  io.controlSignals_Out  := controlSignals
+
 
   io.rdAddress_Out := io.rdAddress_In
  
