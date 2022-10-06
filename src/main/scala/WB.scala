@@ -49,8 +49,8 @@ class WriteBacK extends MultiIOModule {
   // testHarness.registerPeek    := registers.io.readData1
   // testHarness.testUpdates     := registers.testHarness.testUpdates
 
-  // when(io.controlSignals_In.memtoReg){
-  when(controlSignals.memtoReg){
+  // when(controlSignals.memtoReg){
+  when(io.controlSignals_In.memtoReg){
     io.rdData_Out := io.dataOut_In
   }.otherwise{
     io.rdData_Out := io.aluResult_In
