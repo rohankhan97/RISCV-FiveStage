@@ -94,7 +94,7 @@ class Execute extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
-  val controlSignals   = Wire(new ControlSignals)
+  // val controlSignals   = Wire(new ControlSignals)
 
 
   // val reg = RegInit(0.U(32.W))

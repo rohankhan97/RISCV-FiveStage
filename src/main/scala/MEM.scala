@@ -32,7 +32,7 @@ class MemoryFetch() extends MultiIOModule {
 
   val DMEM = Module(new DMEM)
 
-  val controlSignals   = Wire(new ControlSignals)
+  // val controlSignals   = Wire(new ControlSignals)
 
   /**
     * Setup. You should not change this code
