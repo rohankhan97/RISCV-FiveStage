@@ -31,7 +31,7 @@ class MemoryFetch() extends MultiIOModule {
 
 
   val DMEM = Module(new DMEM)
-  val rdAddress = RegInit(0.U(5.W))
+  // val rdAddress = RegInit(0.U(5.W))
 
   val controlSignals   = Wire(new ControlSignals)
 
@@ -57,8 +57,7 @@ class MemoryFetch() extends MultiIOModule {
   // io.controlSignals_Out := io.controlSignals_In
   io.dataOut            := DMEM.io.dataOut
 
-  rdAddress := io.rdAddress_In
-  io.rdAddress_Out := rdAddress
+  io.rdAddress_Out := io.rdAddress_In
 
   controlSignals  := io.controlSignals_In
   io.controlSignals_Out  := controlSignals
