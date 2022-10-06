@@ -37,7 +37,7 @@ class WriteBacK extends MultiIOModule {
   // val registers = Module(new Registers)
   // val decoder   = Module(new Decoder).io
 
-  val controlSignals   = RegInit(new ControlSignals)
+  val controlSignals   = RegInit(0.U(6.W))
 
   controlSignals  := io.controlSignals_In
 
