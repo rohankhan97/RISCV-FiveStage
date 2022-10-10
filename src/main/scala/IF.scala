@@ -24,7 +24,7 @@ class InstructionFetch extends MultiIOModule {
   val io = IO(
     new Bundle {
       val adderIn      = Input(UInt(32.W))
-      val branchResult = Output(UInt(1.W))
+      val branchResult = Input(UInt(1.W))
 
       val PC          = Output(UInt())
       val instruction = Output(new Instruction)
