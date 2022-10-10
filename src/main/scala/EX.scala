@@ -113,7 +113,7 @@ class Execute extends MultiIOModule {
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
   // io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
 
-  io.adderOut := io.PC_In.asSInt + (io.immediate << 1)
+  io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
 
   val ZeroMap = Array(
     0.U(32.W)      -> 1.U(1.W)
