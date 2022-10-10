@@ -49,7 +49,7 @@ class InstructionFetch extends MultiIOModule {
   io.PC := PC
   IMEM.io.instructionAddress := PC
 
-  when(io.branchResult){
+  when(io.branchResult.asBool){
     PC := PC + io.adderIn
   }.otherwise{
     PC := PC + 4.U
