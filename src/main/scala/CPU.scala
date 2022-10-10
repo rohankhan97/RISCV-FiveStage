@@ -61,6 +61,8 @@ class CPU extends MultiIOModule {
 
   IFBarrier.PC_In := IF.io.PC
   IFBarrier.instruction_In := IF.io.instruction
+  IF.io.branchResult  := EXBarrier.branchResult_In
+  IF.io.adderIn       := EXBarrier.adderOut_Out
 
   ID.io.instruction_In := IFBarrier.instruction_Out
   ID.io.PC_In := IFBarrier.PC_Out
@@ -111,6 +113,8 @@ class CPU extends MultiIOModule {
   EXBarrier.dataIn_In         := IDBarrier.readData2_Out
   EXBarrier.dataAddress_In    := EX.io.aluResult
   EXBarrier.rdAddress_In      := EX.io.rdAddress_Out
+  EXBarrier.adderOut_In       := EX.io.adderOut
+  EXBarrier.branchResult_In   := EX.io.branchResult
 
   MEM.io.controlSignals_In := EXBarrier.controlSignals_Out
   MEM.io.dataIn            := EXBarrier.dataIn_Out

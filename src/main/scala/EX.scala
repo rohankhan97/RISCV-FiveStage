@@ -30,11 +30,14 @@ class Execute extends MultiIOModule {
       val op1Select = Input(UInt(1.W))
       val op2Select = Input(UInt(1.W))
       val aluOp = Input(UInt(4.W))
+
       val aluResult = Output(UInt(32.W))
+      val adderOut  = Output(UInt(32.W))
 
       val rdAddress_In  = Input(UInt(5.W))
       val rdAddress_Out = Output(UInt(5.W))
 
+      val branchResult = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
 
     }
@@ -97,7 +100,7 @@ class Execute extends MultiIOModule {
   // val controlSignals   = Wire(new ControlSignals)
 
 
-  // val reg = RegInit(0.U(32.W))
+  val zeroReg = RegInit(0.U(1.W))
   // reg := op1 < op2
 
   /**
@@ -109,6 +112,16 @@ class Execute extends MultiIOModule {
 
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
   // io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
+
+  io.adderOut := io.PC_In.asSInt + (io.immediate << 1)
+
+  val ZeroMap = Array(
+    0.U(32.W)      -> 1.U(1.W)
+   ) 
+
+  zeroReg := MuxLookup(io.aluResult, 0.U(1.W), ZeroMap)
+
+  io.branchResult := (zeroReg & io.controlSignals_In.branch) | io.controlSignals_In.jump
 
   io.controlSignals_Out := io.controlSignals_In
 
