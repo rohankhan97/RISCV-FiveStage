@@ -48,50 +48,50 @@ class Decoder() extends Module {
     */
   val opcodeMap: Array[(BitPat, List[UInt])] = Array(
 
-    // signal     mem2reg regWrite, memRead, memWrite, branch,  jump, branchType,    Op1Select, Op2Select, ImmSelect,    ALUOp,     PcOpSelect,
-    LW     -> List(Y,     Y,        Y,       N,        N,       N,    branchType.DC, rs1,       imm,       ITYPE,        ALUOps.ADD, PcOpSelect.DC),
-    LI     -> List(N,     Y,        Y,       N,        N,       N,    branchType.DC, rs1,       imm,       ITYPE,        ALUOps.ADD, PcOpSelect.DC),
-    LUI    -> List(Y,     Y,        Y,       N,        N,       N,    branchType.DC, Op1Select.DC,       imm,       UTYPE,        ALUOps.ADD, PcOpSelect.DC),
-    AUIPC  -> List(Y,     Y,        Y,       N,        N,       N,    branchType.DC, PC,        imm,       UTYPE,        ALUOps.ADD, PcOpSelect.DC),
+    // signal     mem2reg,regWrite,memRead,memWrite,branch,jump, branchType,    Op1Select, Op2Select, ImmSelect,    ALUOp,     PcOpSelect,
+    LW     -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD, PcOpSelect.DC),
+    LI     -> List(N,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD, PcOpSelect.DC),
+    LUI    -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
+    AUIPC  -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.PC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
 
-    SW     -> List(N,     N,        N,       Y,        N,       N,    branchType.DC, rs1,       imm,       STYPE,        ALUOps.ADD, PcOpSelect.DC),
-    JAL    -> List(N,     Y,        N,       N,        N,       Y,    jump,          PC,        imm,       JTYPE,        ALUOps.JAL,  PC),
-    JALR   -> List(N,     Y,        N,       N,        N,       Y,    jump,          rs1,       imm,       ITYPE,        ALUOps.ADD,  rs1),
-    J      -> List(N,     N,        N,       N,        N,       Y,    jump,          PC,        imm,       JTYPE,        ALUOps.DC,  PC),
-    JR     -> List(N,     N,        N,       N,        N,       Y,    jump,          rs1,       imm,       ITYPE,        ALUOps.ADD,  rs1),
+    SW     -> List(N,    N,       N,      Y,       N,     N,   branchType.DC, Op1Select.rs1, imm,      STYPE,      ALUOps.ADD, PcOpSelect.DC),
+    JAL    -> List(N,    Y,       N,      N,       N,     Y,   jump,          Op1Select.PC,  imm,      JTYPE,      ALUOps.JAL,  PcOpSelect.PC),
+    JALR   -> List(N,    Y,       N,      N,       N,     Y,   jump,          Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD,  PcOpSelect.rs1),
+    J      -> List(N,    N,       N,      N,       N,     Y,   jump,          Op1Select.PC,  imm,      JTYPE,      ALUOps.DC,   PcOpSelect.PC),
+    JR     -> List(N,    N,       N,      N,       N,     Y,   jump,          Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD,  PcOpSelect.rs1),
 
-    BEQ    -> List(N,     N,        N,       N,        Y,       N,    beq,           rs1,       rs2,       BTYPE,        ALUOps.SUB, PcOpSelect.DC),
-    BNE    -> List(N,     N,        N,       N,        Y,       N,    neq,           rs1,       rs2,       BTYPE,        ALUOps.SUB, PcOpSelect.DC),
-    BLT    -> List(N,     N,        N,       N,        Y,       N,    lt,            rs1,       rs2,       BTYPE,        ALUOps.SLT, PcOpSelect.DC),
-    BGE    -> List(N,     N,        N,       N,        Y,       N,    gte,           rs1,       rs2,       BTYPE,        ALUOps.GTE, PcOpSelect.DC), //
-    BLTU   -> List(N,     N,        N,       N,        Y,       N,    ltu,           rs1,       rs2,       BTYPE,        ALUOps.SLTU, PcOpSelect.DC),
-    BGEU   -> List(N,     N,        N,       N,        Y,       N,    gteu,          rs1,       rs2,       BTYPE,        ALUOps.SLT, PcOpSelect.DC), //
-    BLEZ   -> List(N,     N,        N,       N,        Y,       N,    lte,           rs1,       DC,       BTYPE,        ALUOps.LEZ, PcOpSelect.DC), //
+    BEQ    -> List(N,    N,       N,      N,       Y,     N,   beq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.DC),
+    BNE    -> List(N,    N,       N,      N,       Y,     N,   neq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.DC),
+    BLT    -> List(N,    N,       N,      N,       Y,     N,   lt,            Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLT, PcOpSelect.DC),
+    BGE    -> List(N,    N,       N,      N,       Y,     N,   gte,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.GTE, PcOpSelect.DC), //
+    BLTU   -> List(N,    N,       N,      N,       Y,     N,   ltu,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLTU, PcOpSelect.DC),
+    BGEU   -> List(N,    N,       N,      N,       Y,     N,   gteu,          Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLT, PcOpSelect.DC), //
+    BLEZ   -> List(N,    N,       N,      N,       Y,     N,   lte,           Op1Select.rs1, Op2Select.DC, BTYPE,  ALUOps.LEZ, PcOpSelect.DC), //
     
-    MV     -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       DC,       ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
+    MV     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
 
-    ADD    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
-    ADDI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
-    SUB    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.SUB, PcOpSelect.DC),
+    ADD    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
+    ADDI   -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,  ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
+    SUB    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.SUB, PcOpSelect.DC),
 
-    AND    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
-    ANDI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
-    OR     -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.OR, PcOpSelect.DC),
-    ORI    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.OR, PcOpSelect.DC),
-    XOR    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.XOR, PcOpSelect.DC),
-    XORI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.XOR, PcOpSelect.DC),
+    AND    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
+    ANDI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
+    OR     -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.OR, PcOpSelect.DC),
+    ORI    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.OR, PcOpSelect.DC),
+    XOR    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.XOR, PcOpSelect.DC),
+    XORI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.XOR, PcOpSelect.DC),
 
-    SLT    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.SLT, PcOpSelect.DC),
-    SLTI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.SLT, PcOpSelect.DC),
-    SLTU   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.SLTU, PcOpSelect.DC),
-    SLTIU  -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.SLTU, PcOpSelect.DC),
-    SRA    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.SRA, PcOpSelect.DC),
-    SRAI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.SRA, PcOpSelect.DC),
-    SRL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.SRL, PcOpSelect.DC),
-    SRLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.SRL, PcOpSelect.DC),
-    SLL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       rs2,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
-    SLLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       imm,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
-    SNEZ   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, rs1,       DC,       ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
+    SLT    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLT, PcOpSelect.DC),
+    SLTI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SLT, PcOpSelect.DC),
+    SLTU   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLTU, PcOpSelect.DC),
+    SLTIU  -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SLTU, PcOpSelect.DC),
+    SRA    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SRA, PcOpSelect.DC),
+    SRAI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SRA, PcOpSelect.DC),
+    SRL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SRL, PcOpSelect.DC),
+    SRLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SRL, PcOpSelect.DC),
+    SLL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
+    SLLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
+    SNEZ   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
             
         
 
@@ -101,7 +101,7 @@ class Decoder() extends Module {
     )
 
 
-  val NOP = List(N, N, N, N, N, N, branchType.DC, rs1, rs2, ImmFormat.DC, ALUOps.DC, PcOpSelect.DC)
+  val NOP = List(N, N, N, N, N, N, branchType.DC, Op1Select.rs1, rs2, ImmFormat.DC, ALUOps.DC, PcOpSelect.DC)
 
   val decodedControlSignals = ListLookup(
     io.instruction.asUInt(),
