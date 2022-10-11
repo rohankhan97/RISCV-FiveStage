@@ -32,6 +32,7 @@ class InstructionDecode extends MultiIOModule {
       val branchType     = Output(UInt(3.W))
       val op1Select      = Output(UInt(1.W))
       val op2Select      = Output(UInt(1.W))
+      val PcOpSelect     = Output(UInt(1.W))
       val immType        = Output(UInt(3.W))
       val ALUop          = Output(UInt(4.W))
 
@@ -80,6 +81,7 @@ class InstructionDecode extends MultiIOModule {
   io.branchType     := decoder.branchType    
   io.op1Select      := decoder.op1Select     
   io.op2Select      := decoder.op2Select     
+  io.PcOpSelect     := decoder.PcOpSelect     
   io.immType        := decoder.immType       
   io.ALUop          := decoder.ALUop      
 
@@ -93,7 +95,7 @@ class InstructionDecode extends MultiIOModule {
     ImmFormat.ITYPE   -> (io.instruction_In.immediateIType),
     ImmFormat.STYPE   -> (io.instruction_In.immediateSType),
     ImmFormat.BTYPE   -> (io.instruction_In.immediateBType),
-    ImmFormat.UTYPE   -> (io.instruction_In.immediateUType),
+    ImmFormat.UTYPE   -> (io.instruction_In.immediateUType << 12),
     ImmFormat.JTYPE   -> (io.instruction_In.immediateJType),
     ImmFormat.SHAMT   -> (io.instruction_In.immediateZType)
     )

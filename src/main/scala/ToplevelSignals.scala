@@ -63,14 +63,18 @@ object ControlSignals {
 
 
 object branchType {
-  val beq  = 0.asUInt(3.W)
-  val neq  = 1.asUInt(3.W)
-  val gte  = 2.asUInt(3.W)
-  val lt   = 3.asUInt(3.W)
-  val gteu = 4.asUInt(3.W)
-  val ltu  = 5.asUInt(3.W)
-  val jump = 6.asUInt(3.W)
-  val DC   = 0.asUInt(3.W)
+  val beq  =  0.asUInt(4.W)
+  val neq  =  1.asUInt(4.W)
+  val gt   =  2.asUInt(4.W)
+  val gte  =  3.asUInt(4.W)
+  val lt   =  4.asUInt(4.W)
+  val lte  =  5.asUInt(4.W)
+  val gtu  =  6.asUInt(4.W)
+  val gteu =  7.asUInt(4.W)
+  val ltu  =  8.asUInt(4.W)
+  val lteu =  9.asUInt(4.W)
+  val jump = 10.asUInt(4.W)
+  val DC   =  0.asUInt(4.W)
 }
 
 
@@ -93,6 +97,12 @@ object Op2Select {
   val DC  = 0.asUInt(1.W)
 }
 
+object PcOpSelect {
+  val rs1 = 0.asUInt(1.W)
+  val PC  = 1.asUInt(1.W)
+  val DC  = 0.asUInt(1.W)
+}
+
 
 /**
   Used in the decoder
@@ -109,18 +119,25 @@ object ImmFormat {
 
 
 object ALUOps {
-  val ADD    = 0.U(4.W)
-  val SUB    = 1.U(4.W)
-  val AND    = 2.U(4.W)
-  val OR     = 3.U(4.W)
-  val XOR    = 4.U(4.W)
-  val SLT    = 5.U(4.W)
-  val SLL    = 6.U(4.W)
-  val SLTU   = 7.U(4.W)
-  val SRL    = 8.U(4.W)
-  val SRA    = 9.U(4.W)
-  val COPY_A = 10.U(4.W)
-  val COPY_B = 11.U(4.W)
+  val ADD    =  0.U(5.W)
+  val SUB    =  1.U(5.W)
+  val AND    =  2.U(5.W)
+  val OR     =  3.U(5.W)
+  val XOR    =  4.U(5.W)
+  val SLT    =  5.U(5.W)
+  val SLL    =  6.U(5.W)
+  val SLTU   =  7.U(5.W)
+  val SRL    =  8.U(5.W)
+  val SRA    =  9.U(5.W)
+  val COPY_A = 10.U(5.W)
+  val COPY_B = 11.U(5.W)
+  val LTE    = 12.U(5.W)  // less than equal to
+  val LTEU   = 13.U(5.W)  // less than equal to (unsigned)
+  val LEZ    = 14.U(5.W)  // less than equal to 0
+  val GEZ    = 15.U(5.W)  // greater than equal to 0
+  val JAL    = 16.U(5.W)  // 
+  val GTE    = 17.U(5.W)  // greater than equal to
+  val NEZ    = 18.U(5.W)  // not equal to 0
 
-  val DC     = 15.U(4.W)
+  val DC     = 19.U(5.W)
 }

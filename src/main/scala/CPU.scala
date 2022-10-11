@@ -85,6 +85,7 @@ class CPU extends MultiIOModule {
   IDBarrier.branchType_In     := ID.io.branchType 
   IDBarrier.op1Select_In      := ID.io.op1Select 
   IDBarrier.op2Select_In      := ID.io.op2Select  
+  IDBarrier.PcOpSelect_In     := ID.io.PcOpSelect  
   IDBarrier.immType_In        := ID.io.immType   
   IDBarrier.ALUop_In          := ID.io.ALUop      
 
@@ -101,6 +102,7 @@ class CPU extends MultiIOModule {
   EX.io.rdAddress_In      := IDBarrier.rdAddress_Out
   EX.io.op1Select         := IDBarrier.op1Select_Out
   EX.io.op2Select         := IDBarrier.op2Select_Out
+  EX.io.PcOpSelect        := IDBarrier.PcOpSelect_Out
   EX.io.aluOp             := IDBarrier.ALUop_Out
   EX.io.controlSignals_In := IDBarrier.controlSignals_Out
 

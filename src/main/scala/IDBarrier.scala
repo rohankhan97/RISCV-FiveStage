@@ -10,6 +10,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
       val branchType_In     = Input(UInt(3.W))
       val op1Select_In      = Input(UInt(1.W))
       val op2Select_In      = Input(UInt(1.W))
+      val PcOpSelect_In     = Input(UInt(1.W))
       val immType_In        = Input(UInt(3.W))
       val ALUop_In          = Input(UInt(4.W))
 
@@ -23,6 +24,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
       val branchType_Out     = Output(UInt(3.W))
       val op1Select_Out      = Output(UInt(1.W))
       val op2Select_Out      = Output(UInt(1.W))
+      val PcOpSelect_Out     = Output(UInt(1.W))
       val immType_Out        = Output(UInt(3.W))
       val ALUop_Out          = Output(UInt(4.W))
 
@@ -38,6 +40,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   val branchType       = RegInit(0.U(3.W))
   val op1Select        = RegInit(0.U(1.W))
   val op2Select        = RegInit(0.U(1.W))
+  val PcOpSelect       = RegInit(0.U(1.W))
   val immType          = RegInit(0.U(3.W))
   val ALUop            = RegInit(0.U(4.W))
   val readData1        = RegInit(0.U(32.W))
@@ -51,6 +54,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   branchType      := io.branchType_In
   op1Select       := io.op1Select_In
   op2Select       := io.op2Select_In
+  PcOpSelect      := io.PcOpSelect_In
   immType         := io.immType_In
   ALUop           := io.ALUop_In
 
@@ -64,6 +68,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   io.branchType_Out      := branchType    
   io.op1Select_Out       := op1Select     
   io.op2Select_Out       := op2Select     
+  io.PcOpSelect_Out      := PcOpSelect     
   io.immType_Out         := immType       
   io.ALUop_Out           := ALUop  
 

@@ -29,6 +29,7 @@ class Execute extends MultiIOModule {
       val PC_In     = Input(UInt(32.W))
       val op1Select = Input(UInt(1.W))
       val op2Select = Input(UInt(1.W))
+      val PcOpSelect = Input(UInt(1.W))
       val aluOp = Input(UInt(4.W))
 
       val aluResult = Output(UInt(32.W))
@@ -88,10 +89,18 @@ class Execute extends MultiIOModule {
     ALUOps.OR       -> (op1 | op2).asUInt,
     ALUOps.XOR      -> (op1 ^ op2).asUInt,
     ALUOps.SLT      -> (op1 < op2).asUInt,
+    ALUOps.GTE      -> (op2 < op1).asUInt,
     ALUOps.SLTU     -> (op1.asUInt < op2.asUInt).asUInt,
     ALUOps.SLL      -> (op1.asUInt << op2(4, 0).asUInt).asUInt,
     ALUOps.SRL      -> (op1.asUInt >> op2(4, 0).asUInt).asUInt,
-    ALUOps.SRA      -> (op1 >> op2(4, 0).asUInt).asUInt
+    ALUOps.SRA      -> (op1 >> op2(4, 0).asUInt).asUInt,
+    ALUOps.LTE      -> (op1 <= op2).asUInt,
+    ALUOps.LTEU     -> (op1.asUInt <= op2.asUInt).asUInt,
+    ALUOps.LEZ      -> (op1 <= 0.S).asUInt,
+    ALUOps.GEZ      -> (op1 >= 0.S).asUInt,
+    ALUOps.JAL      -> (op1 + 4.S).asUInt,
+    ALUOps.NEZ      -> (op1 =/= 0.S).asUInt,
+    ALUOps.COPY_A   -> op1.asUInt
     )
 
   // val registers = Module(new Registers)
@@ -113,7 +122,24 @@ class Execute extends MultiIOModule {
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
   // io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
 
-  io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
+  val add_op = Wire(SInt(32.W))
+
+  val addMap = Array(
+    Op2Select.PC       -> io.PC_In.asSInt,
+    Op2Select.rs1      -> io.readData1.asSInt
+    )
+
+  add_op := MuxLookup(io.PcOpSelect, 0.S(32.W), addMap)
+
+  val constant = RegInit(-1.S(32.W))
+
+  val PcAddMap = Array(
+    PcOpSelect.PC      -> (add_op + (io.immediate << 1)).asUInt,
+    PcOpSelect.rs1     -> ((add_op + (io.immediate << 1)).asUInt & constant).asUInt
+  )
+
+  io.adderOut := MuxLookup(io.PcOpSelect, 0.S(32.W), PcAddMap)
+  // io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
 
   val ZeroMap = Array(
     0.U(32.W)      -> 1.U(1.W)
