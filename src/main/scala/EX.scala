@@ -125,8 +125,8 @@ class Execute extends MultiIOModule {
   val add_op = Wire(SInt(32.W))
 
   val addMap = Array(
-    Op2Select.PC       -> io.PC_In.asSInt,
-    Op2Select.rs1      -> io.readData1.asSInt
+    PcOpSelect.PC       -> io.PC_In.asSInt,
+    PcOpSelect.rs1      -> io.readData1.asSInt
     )
 
   add_op := MuxLookup(io.PcOpSelect, 0.S(32.W), addMap)
@@ -135,7 +135,7 @@ class Execute extends MultiIOModule {
 
   val PcAddMap = Array(
     PcOpSelect.PC      -> (add_op + (io.immediate << 1)).asUInt,
-    PcOpSelect.rs1     -> ((add_op + (io.immediate << 1)).asUInt & constant).asUInt
+    PcOpSelect.rs1     -> ((add_op + (io.immediate << 1)) & constant).asUInt
   )
 
   io.adderOut := MuxLookup(io.PcOpSelect, 0.S(32.W), PcAddMap)
