@@ -19,7 +19,7 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "forward2.s"
+  val singleTest = "BTreeO3.s"
 
   val nopPadded = true
 
