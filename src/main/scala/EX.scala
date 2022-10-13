@@ -138,11 +138,11 @@ class Execute extends MultiIOModule {
     PcOpSelect.rs1     -> ((add_op + (io.immediate << 1)) & constant).asUInt
   )
 
-  io.adderOut := MuxLookup(io.PcOpSelect, 0.S(32.W), PcAddMap)
+  io.adderOut := MuxLookup(io.PcOpSelect, 0.U(32.W), PcAddMap)
   // io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
 
   val ZeroMap = Array(
-    0.U      -> 1.U(1.W)
+    0.U(32.W)      -> 1.U(1.W)
    ) 
 
   zeroReg := MuxLookup(io.aluResult, 0.U(1.W), ZeroMap)
