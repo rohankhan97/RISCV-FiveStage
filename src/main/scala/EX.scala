@@ -102,7 +102,8 @@ class Execute extends MultiIOModule {
     ALUOps.GEZ      -> (op1 >= 0.S).asUInt,
     ALUOps.JAL      -> (op1 + 4.S).asUInt,
     // ALUOps.NEZ      -> (op1 =/= 0.S).asUInt,
-    ALUOps.COPY_A   -> op1.asUInt
+    ALUOps.COPY_A   -> op1.asUInt,
+    ALUOps.COPY_B   -> op2.asUInt
     )
 
   // val registers = Module(new Registers)
