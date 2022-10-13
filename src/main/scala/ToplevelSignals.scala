@@ -74,7 +74,7 @@ object branchType {
   val ltu  =  8.asUInt(4.W)
   val lteu =  9.asUInt(4.W)
   val jump = 10.asUInt(4.W)
-  val DC   =  0.asUInt(4.W)
+  val DC   = 11.asUInt(4.W)
 }
 
 
@@ -138,6 +138,7 @@ object ALUOps {
   val JAL    = 16.U(5.W)  // 
   val GTE    = 17.U(5.W)  // greater than equal to
   val NEZ    = 18.U(5.W)  // not equal to 0
+  val GTEU   = 19.U(5.W)  // not equal to 0
 
-  val DC     = 19.U(5.W)
+  val DC     = 20.U(5.W)
 }

@@ -105,6 +105,7 @@ class CPU extends MultiIOModule {
   EX.io.PcOpSelect        := IDBarrier.PcOpSelect_Out
   EX.io.aluOp             := IDBarrier.ALUop_Out
   EX.io.controlSignals_In := IDBarrier.controlSignals_Out
+  EX.io.branchType_In     := IDBarrier.branchType_Out
 
 
   //////////////////////////////////////////////////////////////////////

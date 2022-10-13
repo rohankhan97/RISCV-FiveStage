@@ -30,7 +30,8 @@ class Execute extends MultiIOModule {
       val op1Select = Input(UInt(1.W))
       val op2Select = Input(UInt(1.W))
       val PcOpSelect = Input(UInt(1.W))
-      val aluOp = Input(UInt(4.W))
+      val aluOp     = Input(UInt(5.W))
+      val branchType_In     = Input(UInt(4.W))
 
       val aluResult = Output(UInt(32.W))
       val adderOut  = Output(UInt(32.W))
@@ -91,6 +92,7 @@ class Execute extends MultiIOModule {
     ALUOps.SLT      -> (op1 < op2).asUInt,
     ALUOps.GTE      -> (op2 < op1).asUInt,
     ALUOps.SLTU     -> (op1.asUInt < op2.asUInt).asUInt,
+    ALUOps.GTEU     -> (op2.asUInt < op1.asUInt).asUInt,
     ALUOps.SLL      -> (op1.asUInt << op2(4, 0).asUInt).asUInt,
     ALUOps.SRL      -> (op1.asUInt >> op2(4, 0).asUInt).asUInt,
     ALUOps.SRA      -> (op1 >> op2(4, 0).asUInt).asUInt,
@@ -109,7 +111,6 @@ class Execute extends MultiIOModule {
   // val controlSignals   = Wire(new ControlSignals)
 
 
-  val zeroReg = RegInit(0.U(1.W))
   // reg := op1 < op2
 
   /**
@@ -134,12 +135,18 @@ class Execute extends MultiIOModule {
   val constant = RegInit(-1.S(32.W))
 
   val PcAddMap = Array(
-    PcOpSelect.PC      -> (add_op + (io.immediate << 1)).asUInt,
-    PcOpSelect.rs1     -> ((add_op + (io.immediate << 1)) & constant).asUInt
+    PcOpSelect.PC      -> (add_op + (io.immediate)).asUInt,
+    PcOpSelect.rs1     -> ((add_op + (io.immediate)) & constant).asUInt
   )
 
   io.adderOut := MuxLookup(io.PcOpSelect, 0.U(32.W), PcAddMap)
   // io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
+
+  val zeroReg = RegInit(0.U(1.W))
+  val LTReg = RegInit(0.U(1.W))
+  val unEqReg = RegInit(0.U(1.W))
+
+  val branchReg = RegInit(0.U(1.W))
 
   val ZeroMap = Array(
     0.U(32.W)      -> 1.U(1.W)
@@ -147,7 +154,30 @@ class Execute extends MultiIOModule {
 
   zeroReg := MuxLookup(io.aluResult, 0.U(1.W), ZeroMap)
 
-  io.branchResult := (zeroReg & io.controlSignals_In.branch) | io.controlSignals_In.jump
+  val LTMap = Array(
+    1.U(32.W)      -> 1.U(1.W)
+   ) 
+
+  LTReg := MuxLookup(io.aluResult, 0.U(1.W), LTMap)
+
+  val unEqMap = Array(
+    0.U(32.W)      -> 0.U(1.W)
+   ) 
+
+  unEqReg := MuxLookup(io.aluResult, 1.U(1.W), unEqMap)
+
+  val branchMap = Array(
+    branchType.beq      -> zeroReg,
+    branchType.neq      -> unEqReg,
+    branchType.lt       -> LTReg,
+    branchType.ltu      -> LTReg,
+    branchType.gte      -> LTReg,
+    branchType.gteu     -> LTReg
+   )
+
+  branchReg := MuxLookup(io.branchType_In, 0.U(1.W), branchMap)
+
+  io.branchResult := (branchReg & io.controlSignals_In.branch) | io.controlSignals_In.jump
 
   io.controlSignals_Out := io.controlSignals_In
 

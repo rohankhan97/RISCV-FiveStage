@@ -60,12 +60,12 @@ class Decoder() extends Module {
     // J      -> List(N,    N,       N,      N,       N,     Y,   jump,          Op1Select.PC,  imm,      JTYPE,      ALUOps.DC,   PcOpSelect.PC),
     // JR     -> List(N,    N,       N,      N,       N,     Y,   jump,          Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD,  PcOpSelect.rs1),
 
-    BEQ    -> List(N,    N,       N,      N,       Y,     N,   beq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.DC),
-    BNE    -> List(N,    N,       N,      N,       Y,     N,   neq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.DC),
-    BLT    -> List(N,    N,       N,      N,       Y,     N,   lt,            Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLT, PcOpSelect.DC),
-    BGE    -> List(N,    N,       N,      N,       Y,     N,   gte,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.GTE, PcOpSelect.DC), //
-    BLTU   -> List(N,    N,       N,      N,       Y,     N,   ltu,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLTU, PcOpSelect.DC),
-    BGEU   -> List(N,    N,       N,      N,       Y,     N,   gteu,          Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLT, PcOpSelect.DC), //
+    BEQ    -> List(N,    N,       N,      N,       Y,     N,   beq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.PC),
+    BNE    -> List(N,    N,       N,      N,       Y,     N,   neq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.PC),
+    BLT    -> List(N,    N,       N,      N,       Y,     N,   lt,            Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLT, PcOpSelect.PC),
+    BGE    -> List(N,    N,       N,      N,       Y,     N,   gte,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.GTE, PcOpSelect.PC), //
+    BLTU   -> List(N,    N,       N,      N,       Y,     N,   ltu,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLTU, PcOpSelect.PC),
+    BGEU   -> List(N,    N,       N,      N,       Y,     N,   gteu,          Op1Select.rs1, rs2,      BTYPE,      ALUOps.GTEU, PcOpSelect.PC), //
     // BLEZ   -> List(N,    N,       N,      N,       Y,     N,   lte,           Op1Select.rs1, Op2Select.DC, BTYPE,  ALUOps.LEZ, PcOpSelect.DC), //
     
     // MV     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
