@@ -95,7 +95,8 @@ class InstructionDecode extends MultiIOModule {
     ImmFormat.ITYPE   -> (io.instruction_In.immediateIType),
     ImmFormat.STYPE   -> (io.instruction_In.immediateSType),
     ImmFormat.BTYPE   -> (io.instruction_In.immediateBType),
-    ImmFormat.UTYPE   -> (io.instruction_In.immediateUType << 12),
+    ImmFormat.UTYPE   -> (io.instruction_In.immediateUType),
+    // ImmFormat.UTYPE   -> (io.instruction_In.immediateUType << 12),
     ImmFormat.JTYPE   -> (io.instruction_In.immediateJType),
     ImmFormat.SHAMT   -> (io.instruction_In.immediateZType)
     )
