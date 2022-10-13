@@ -50,9 +50,9 @@ class Decoder() extends Module {
 
     // signal     mem2reg,regWrite,memRead,memWrite,branch,jump, branchType,    Op1Select, Op2Select, ImmSelect,    ALUOp,     PcOpSelect,
     LW     -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD, PcOpSelect.DC),
-    LI     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      ITYPE,      ALUOps.COPY_B, PcOpSelect.DC),
-    LUI    -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
-    AUIPC  -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.PC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
+    // LI     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      ITYPE,      ALUOps.COPY_B, PcOpSelect.DC),
+    LUI    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
+    AUIPC  -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.PC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
 
     SW     -> List(N,    N,       N,      Y,       N,     N,   branchType.DC, Op1Select.rs1, imm,      STYPE,      ALUOps.ADD, PcOpSelect.DC),
     JAL    -> List(N,    Y,       N,      N,       N,     Y,   jump,          Op1Select.PC,  imm,      JTYPE,      ALUOps.JAL,  PcOpSelect.PC),
