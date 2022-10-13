@@ -19,12 +19,12 @@ class Decoder() extends Module {
                 val instruction    = Input(new Instruction)
 
                 val controlSignals = Output(new ControlSignals)
-                val branchType     = Output(UInt(3.W))
+                val branchType     = Output(UInt(4.W))
                 val op1Select      = Output(UInt(1.W))
                 val op2Select      = Output(UInt(1.W))
                 val PcOpSelect     = Output(UInt(1.W))
                 val immType        = Output(UInt(3.W))
-                val ALUop          = Output(UInt(4.W))
+                val ALUop          = Output(UInt(5.W))
               })
 
   import lookup._
