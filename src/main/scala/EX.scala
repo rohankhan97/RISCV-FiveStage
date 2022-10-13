@@ -99,7 +99,7 @@ class Execute extends MultiIOModule {
     ALUOps.LEZ      -> (op1 <= 0.S).asUInt,
     ALUOps.GEZ      -> (op1 >= 0.S).asUInt,
     ALUOps.JAL      -> (op1 + 4.S).asUInt,
-    ALUOps.NEZ      -> (op1 =/= 0.S).asUInt,
+    // ALUOps.NEZ      -> (op1 =/= 0.S).asUInt,
     ALUOps.COPY_A   -> op1.asUInt
     )
 
@@ -142,7 +142,7 @@ class Execute extends MultiIOModule {
   // io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
 
   val ZeroMap = Array(
-    0.U(32.W)      -> 1.U(1.W)
+    0.U      -> 1.U(1.W)
    ) 
 
   zeroReg := MuxLookup(io.aluResult, 0.U(1.W), ZeroMap)
