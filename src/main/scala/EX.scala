@@ -136,8 +136,8 @@ class Execute extends MultiIOModule {
   val constant = RegInit(-1.S(32.W))
 
   val PcAddMap = Array(
-    PcOpSelect.PC      -> (add_op + (io.immediate)).asUInt,
-    PcOpSelect.rs1     -> ((add_op + (io.immediate)) & constant).asUInt
+    PcOpSelect.PC      -> (add_op + (io.immediate << 1)).asUInt,
+    PcOpSelect.rs1     -> ((add_op + (io.immediate << 1)) & constant).asUInt
   )
 
   io.adderOut := MuxLookup(io.PcOpSelect, 0.U(32.W), PcAddMap)
