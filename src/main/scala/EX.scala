@@ -143,11 +143,11 @@ class Execute extends MultiIOModule {
   io.adderOut := MuxLookup(io.PcOpSelect, 0.U(32.W), PcAddMap)
   // io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
 
-  val zeroReg = RegInit(0.U(1.W))
-  val LTReg = RegInit(0.U(1.W))
-  val unEqReg = RegInit(0.U(1.W))
+  val zeroReg = Wire(UInt(1.W))
+  val LTReg = Wire(UInt(1.W))
+  val unEqReg = Wire(UInt(1.W))
 
-  val branchReg = RegInit(0.U(1.W))
+  val branchReg = Wire(UInt(1.W))
 
   val ZeroMap = Array(
     0.U(32.W)      -> 1.U(1.W)
