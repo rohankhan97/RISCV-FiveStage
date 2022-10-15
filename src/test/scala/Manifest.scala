@@ -19,7 +19,7 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "palindromeO3.s"
+  val singleTest = "searchTegularO0.s"
 
   val nopPadded = true
 
