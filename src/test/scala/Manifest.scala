@@ -19,7 +19,7 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "searchRegularO0.s"
+  val singleTest = "square.s"
 
   val nopPadded = true
 
