@@ -19,16 +19,16 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "palindrome.s"
+  val singleTest = "palindromeO3.s"
 
   val nopPadded = true
 
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
     printErrors        = true,
-    printParsedProgram = true, //
-    printVMtrace       = true, //
-    printVMfinal       = true, //
+    printParsedProgram = false, //
+    printVMtrace       = false, //
+    printVMfinal       = false, //
     printMergedTrace   = true,
     printBinary        = false,
     nopPadded          = nopPadded,
