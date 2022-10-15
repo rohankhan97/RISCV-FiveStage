@@ -19,7 +19,7 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "square.s"
+  val singleTest = "branchProfiling.s"
 
   val nopPadded = true
 
