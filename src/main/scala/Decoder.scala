@@ -75,22 +75,22 @@ class Decoder() extends Module {
     SUB    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.SUB, PcOpSelect.DC),
 
     AND    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
-    ANDI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
+    ANDI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.AND, PcOpSelect.DC),
     OR     -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.OR, PcOpSelect.DC),
-    ORI    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.OR, PcOpSelect.DC),
+    ORI    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.OR, PcOpSelect.DC),
     XOR    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.XOR, PcOpSelect.DC),
-    XORI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.XOR, PcOpSelect.DC),
+    XORI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.XOR, PcOpSelect.DC),
 
     SLT    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLT, PcOpSelect.DC),
-    SLTI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SLT, PcOpSelect.DC),
+    SLTI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SLT, PcOpSelect.DC),
     SLTU   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLTU, PcOpSelect.DC),
-    SLTIU  -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SLTU, PcOpSelect.DC),
+    SLTIU  -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SLTU, PcOpSelect.DC),
     SRA    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SRA, PcOpSelect.DC),
-    SRAI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SRA, PcOpSelect.DC),
+    SRAI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SRA, PcOpSelect.DC),
     SRL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SRL, PcOpSelect.DC),
-    SRLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SRL, PcOpSelect.DC),
+    SRLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SRL, PcOpSelect.DC),
     SLL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
-    SLLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
+    SLLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SLL, PcOpSelect.DC),
     // SNEZ   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
             
         
