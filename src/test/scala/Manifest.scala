@@ -19,7 +19,7 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "branchProfiling.s"
+  val singleTest = "convolution.s"
 
   val nopPadded = true
 
