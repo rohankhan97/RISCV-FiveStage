@@ -26,10 +26,10 @@ object Manifest {
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
     printErrors        = true,
-    printParsedProgram = false, //
-    printVMtrace       = false, //
-    printVMfinal       = false, //
-    printMergedTrace   = true,
+    printParsedProgram = false, 
+    printVMtrace       = false, 
+    printVMfinal       = false, 
+    printMergedTrace   = false, //
     printBinary        = false,
     nopPadded          = nopPadded,
     breakPoints        = Nil, // not implemented
