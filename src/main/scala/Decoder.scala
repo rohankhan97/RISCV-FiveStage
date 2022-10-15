@@ -71,7 +71,7 @@ class Decoder() extends Module {
     // MV     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
 
     ADD    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
-    ADDI   -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,  ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
+    ADDI   -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,  ITYPE, ALUOps.ADD, PcOpSelect.DC),
     SUB    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.SUB, PcOpSelect.DC),
 
     AND    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.AND, PcOpSelect.DC),
