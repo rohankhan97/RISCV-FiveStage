@@ -25,7 +25,7 @@ object Manifest {
 
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
-    printErrors        = true,
+    printErrors        = false, //
     printParsedProgram = false,
     printVMtrace       = false,
     printVMfinal       = false,
