@@ -57,8 +57,10 @@ class Execute extends MultiIOModule {
 
   val rs1 = Wire(UInt(32.W))
   val rs2 = Wire(UInt(32.W))
-  val mem = Wire(UInt(5.W))
-  val wb  = Wire(UInt(5.W))
+  val mem1 = Wire(UInt(5.W))
+  val mem2 = Wire(UInt(5.W))
+  val wb1  = Wire(UInt(5.W))
+  val wb2  = Wire(UInt(5.W))
 
   mem1 = io.rs1Address_In - io.MEMrdAddress_In
   mem2 = io.rs2Address_In - io.MEMrdAddress_In
