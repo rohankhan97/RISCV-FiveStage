@@ -92,6 +92,8 @@ class CPU extends MultiIOModule {
   IDBarrier.readData1_In      := ID.io.readData1
   IDBarrier.readData2_In      := ID.io.readData2
   IDBarrier.immediate_In      := ID.io.immediate
+  IDBarrier.rs1Address_In     := ID.io.rs1Address
+  IDBarrier.rs2Address_In     := ID.io.rs2Address
   IDBarrier.rdAddress_In      := ID.io.rdAddress
   IDBarrier.PC_In             := ID.io.PC_Out
 
@@ -99,6 +101,8 @@ class CPU extends MultiIOModule {
   EX.io.readData2         := IDBarrier.readData2_Out
   EX.io.immediate         := IDBarrier.immediate_Out
   EX.io.PC_In             := IDBarrier.PC_Out
+  EX.io.rs1Address_In     := IDBarrier.rs1Address_Out
+  EX.io.rs2Address_In     := IDBarrier.rs2Address_Out
   EX.io.rdAddress_In      := IDBarrier.rdAddress_Out
   EX.io.op1Select         := IDBarrier.op1Select_Out
   EX.io.op2Select         := IDBarrier.op2Select_Out
@@ -140,5 +144,14 @@ class CPU extends MultiIOModule {
   WB.io.controlSignals_In := MEMBarrier.controlSignals_Out
   WB.io.rdAddress_In      := MEMBarrier.rdAddress_Out
   WB.io.dataOut_In        := MEMBarrier.dataOut_Out
+
+  /////////////////////////////////////////////////////////////////////
+  //////////////////////// FORWARDING UNIT ////////////////////////////
+  /////////////////////////////////////////////////////////////////////
+
+  EX.io.MEMrdAddress_In := MEM.io.rdAddress_Out
+  EX.io.MEMaluResult_in := MEM.io.aluResult_Out
+  EX.io.WBrdAddress_In  := WB.io.rdAddress_Out
+  EX.io.WBaluResult_in  := WB.io.rdData_Out
 
 }

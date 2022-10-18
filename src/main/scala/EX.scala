@@ -35,9 +35,15 @@ class Execute extends MultiIOModule {
 
       val aluResult = Output(UInt(32.W))
       val adderOut  = Output(UInt(32.W))
+      val MEMaluResult_in = Input(UInt(32.W))
+      val WBaluResult_in  = Input(UInt(32.W))
 
+      val rs1Address_In = Input(UInt(5.W))
+      val rs2Address_In = Input(UInt(5.W))
       val rdAddress_In  = Input(UInt(5.W))
       val rdAddress_Out = Output(UInt(5.W))
+      val MEMrdAddress_In  = Input(UInt(5.W))
+      val WBrdAddress_In   = Input(UInt(5.W))
 
       val branchResult = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
@@ -45,19 +51,48 @@ class Execute extends MultiIOModule {
     }
   )
 
+  //////////////////////////////////////////////////////////
+  //////////////////// FORWARDING UNIT /////////////////////
+  //////////////////////////////////////////////////////////
+
+  val rs1 = Wire(UInt(32.W))
+  val rs2 = Wire(UInt(32.W))
+
+  when(io.rs1Address_In == io.MEMrdAddress_In){
+    rs1 := io.MEMaluResult_in
+  }.otherwise{
+    when(io.rs1Address_In == io.WBrdAddress_In){
+      rs1 := io.WBaluResult_in
+    }.otherwise{
+      rs1 := io.readData1_In
+    }
+  }
+
+  when(io.rs2Address_In == io.MEMrdAddress_In){
+    rs2 := io.MEMaluResult_in
+  }.otherwise{
+    when(io.rs2Address_In == io.WBrdAddress_In){
+      rs2 := io.WBaluResult_in
+    }.otherwise{
+      rs2 := io.readData1_In
+    }
+  }
+
   val op1 = Wire(SInt(32.W))
   val op2 = Wire(SInt(32.W))
 
   val op1Map = Array(
-    Op1Select.rs1      -> io.readData1.asSInt,
-    Op1Select.PC      -> io.PC_In.asSInt
+    // Op1Select.rs1      -> io.readData1.asSInt,
+    Op1Select.rs1      -> rs1,
+    Op1Select.PC       -> io.PC_In.asSInt
     )
 
   op1 := MuxLookup(io.op1Select, 0.S(32.W), op1Map)
   // op1 := io.readData1.asSInt
 
   val op2Map = Array(
-    Op2Select.rs2      -> io.readData2.asSInt,
+    // Op2Select.rs2      -> io.readData2.asSInt,
+    Op2Select.rs2      -> rs2,
     Op2Select.imm      -> io.immediate
     )
 

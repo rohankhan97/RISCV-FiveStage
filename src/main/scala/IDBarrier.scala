@@ -17,6 +17,8 @@ class InstructionDecodeBarrier extends MultiIOModule {
       val readData1_In    = Input(UInt(32.W))
       val readData2_In    = Input(UInt(32.W))
       val immediate_In    = Input(SInt(32.W))
+      val rs1Address_In   = Input(UInt(5.W))
+      val rs2Address_In   = Input(UInt(5.W))
       val rdAddress_In    = Input(UInt(5.W))
       val PC_In           = Input(UInt(32.W))
 
@@ -31,6 +33,8 @@ class InstructionDecodeBarrier extends MultiIOModule {
       val readData1_Out    = Output(UInt(32.W))
       val readData2_Out    = Output(UInt(32.W))
       val immediate_Out    = Output(SInt(32.W))
+      val rs1Address_Out   = Output(UInt(5.W))
+      val rs2Address_Out   = Output(UInt(5.W))
       val rdAddress_Out    = Output(UInt(5.W))
       val PC_Out           = Output(UInt(32.W))
     })
@@ -46,6 +50,8 @@ class InstructionDecodeBarrier extends MultiIOModule {
   val readData1        = RegInit(0.U(32.W))
   val readData2        = RegInit(0.U(32.W))
   val immediate        = RegInit(0.S(32.W))
+  val rs1Address       = RegInit(0.U(5.W))
+  val rs2Address       = RegInit(0.U(5.W))
   val rdAddress        = RegInit(0.U(5.W))
   val PC               = RegInit(0.U(32.W))
 
@@ -61,6 +67,8 @@ class InstructionDecodeBarrier extends MultiIOModule {
   readData1       := io.readData1_In
   readData2       := io.readData2_In
   immediate       := io.immediate_In
+  rs1Address      := io.rs1Address_In
+  rs2Address      := io.rs2Address_In
   rdAddress       := io.rdAddress_In
   PC              := io.PC_In
 
@@ -75,6 +83,8 @@ class InstructionDecodeBarrier extends MultiIOModule {
   io.readData1_Out       := readData1     
   io.readData2_Out       := readData2     
   io.immediate_Out       := immediate     
+  io.rs1Address_Out      := rs1Address     
+  io.rs2Address_Out      := rs2Address     
   io.rdAddress_Out       := rdAddress     
   io.PC_Out              := PC     
 
