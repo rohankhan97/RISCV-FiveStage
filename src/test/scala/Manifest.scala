@@ -21,7 +21,7 @@ object Manifest {
 
   val singleTest = "forward1.s"
 
-  val nopPadded = false
+  val nopPadded = true
 
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
