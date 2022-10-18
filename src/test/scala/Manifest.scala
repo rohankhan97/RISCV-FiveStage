@@ -19,9 +19,9 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "forward1.s"
+  val singleTest = "forward2.s"
 
-  val nopPadded = true
+  val nopPadded = false
 
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
