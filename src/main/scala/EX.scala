@@ -58,23 +58,23 @@ class Execute extends MultiIOModule {
   val rs1 = Wire(UInt(32.W))
   val rs2 = Wire(UInt(32.W))
 
-  when(io.rs1Address_In == io.MEMrdAddress_In){
+  when((io.rs1Address_In == io.MEMrdAddress_In).asBool){
     rs1 := io.MEMaluResult_in
   }.otherwise{
-    when(io.rs1Address_In == io.WBrdAddress_In){
+    when((io.rs1Address_In == io.WBrdAddress_In).asBool){
       rs1 := io.WBaluResult_in
     }.otherwise{
-      rs1 := io.readData1_In
+      rs1 := io.readData1
     }
   }
 
-  when(io.rs2Address_In == io.MEMrdAddress_In){
+  when((io.rs2Address_In == io.MEMrdAddress_In).asBool){
     rs2 := io.MEMaluResult_in
   }.otherwise{
-    when(io.rs2Address_In == io.WBrdAddress_In){
+    when((io.rs2Address_In == io.WBrdAddress_In).asBool){
       rs2 := io.WBaluResult_in
     }.otherwise{
-      rs2 := io.readData1_In
+      rs2 := io.readData2
     }
   }
 
