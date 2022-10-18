@@ -83,7 +83,7 @@ class Execute extends MultiIOModule {
 
   val op1Map = Array(
     // Op1Select.rs1      -> io.readData1.asSInt,
-    Op1Select.rs1      -> rs1,
+    Op1Select.rs1      -> rs1.asSInt,
     Op1Select.PC       -> io.PC_In.asSInt
     )
 
@@ -92,7 +92,7 @@ class Execute extends MultiIOModule {
 
   val op2Map = Array(
     // Op2Select.rs2      -> io.readData2.asSInt,
-    Op2Select.rs2      -> rs2,
+    Op2Select.rs2      -> rs2.asSInt,
     Op2Select.imm      -> io.immediate
     )
 
