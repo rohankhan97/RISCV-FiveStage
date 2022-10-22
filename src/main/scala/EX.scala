@@ -84,19 +84,20 @@ class Execute extends MultiIOModule {
   zeroWb1 := MuxLookup(wb1, 0.U(1.W), zeroWbMap)
   zeroWb2 := MuxLookup(wb2, 0.U(1.W), zeroWbMap)
 
-  when(zeroMem1.asBool){
-    when(io.controlSignals_In.memRead){
-      io.notStall := 0.U
-      rs1 := io.WBaluResult_in
+  when(zeroWb1.asBool){
+    rs1 := io.WBaluResult_in
+    io.notStall := 1.U
+  }.otherwise{
+    when(zeroMem1.asBool){
+      when(io.controlSignals_In.memRead){
+        io.notStall := 0.U
+        rs1 := io.WBaluResult_in
+      }.otherwise{
+        io.notStall := 1.U
+        rs1 := io.MEMaluResult_in
+      }        
     }.otherwise{
       io.notStall := 1.U
-      rs1 := io.MEMaluResult_in
-    }
-  }.otherwise{
-    io.notStall := 1.U
-    when(zeroWb1.asBool){
-      rs1 := io.WBaluResult_in
-    }.otherwise{
       rs1 := io.readData1
     }
   }
