@@ -47,6 +47,7 @@ class Execute extends MultiIOModule {
 
       val branchResult = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
+      val notStall   = Output(UInt(1.W))
 
     }
   )
@@ -84,8 +85,15 @@ class Execute extends MultiIOModule {
   zeroWb2 := MuxLookup(wb2, 0.U(1.W), zeroWbMap)
 
   when(zeroMem1.asBool){
-    rs1 := io.MEMaluResult_in
+    when(io.controlSignals_In.memRead){
+      io.notStall := 0.U
+      rs1 := io.WBaluResult_in
+    }.otherwise{
+      io.notStall := 1.U
+      rs1 := io.MEMaluResult_in
+    }
   }.otherwise{
+    io.notStall := 1.U
     when(zeroWb1.asBool){
       rs1 := io.WBaluResult_in
     }.otherwise{

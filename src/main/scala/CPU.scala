@@ -154,4 +154,7 @@ class CPU extends MultiIOModule {
   EX.io.WBrdAddress_In  := WB.io.rdAddress_Out
   EX.io.WBaluResult_in  := WB.io.rdData_Out
 
+  IFBarrier.notStall    := EX.io.notStall
+  IDBarrier.notStall    := EX.io.notStall
+  EXBarrier.notStall    := EX.io.notStall
 }
