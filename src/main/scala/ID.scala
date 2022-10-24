@@ -88,33 +88,33 @@ class InstructionDecode extends MultiIOModule {
   io.ALUop          := decoder.ALUop      
 
   ////////////// MY LOGIC //////////////
-  val rs1 = Wire(UInt(32.W))
-  val rs2 = Wire(UInt(32.W))
-  rs1 := io.instruction_In.registerRs1 - io.rdAddress_In
-  rs2 := io.instruction_In.registerRs2 - io.rdAddress_In
-  val zeroRs1 = Wire(UInt(1.W))
-  val zeroRs2 = Wire(UInt(1.W))
-  val zeroRsMap = Array(
-    0.U(32.W)      -> 1.U(1.W)
-   ) 
-  zeroRs1 := MuxLookup(rs1, 0.U(1.W), zeroRsMap)
-  zeroRs2 := MuxLookup(rs2, 0.U(1.W), zeroRsMap)
+  // val rs1 = Wire(UInt(32.W))
+  // val rs2 = Wire(UInt(32.W))
+  // rs1 := io.instruction_In.registerRs1 - io.rdAddress_In
+  // rs2 := io.instruction_In.registerRs2 - io.rdAddress_In
+  // val zeroRs1 = Wire(UInt(1.W))
+  // val zeroRs2 = Wire(UInt(1.W))
+  // val zeroRsMap = Array(
+  //   0.U(32.W)      -> 1.U(1.W)
+  //  ) 
+  // zeroRs1 := MuxLookup(rs1, 0.U(1.W), zeroRsMap)
+  // zeroRs2 := MuxLookup(rs2, 0.U(1.W), zeroRsMap)
 
-  when(zeroRs1.asBool){
-    io.readData1 := io.writeData
-  }.otherwise{
-    io.readData1 := registers.io.readData1
-  }
+  // when(zeroRs1.asBool){
+  //   io.readData1 := io.writeData
+  // }.otherwise{
+  //   io.readData1 := registers.io.readData1
+  // }
 
-  when(zeroRs2.asBool){
-    io.readData2 := io.writeData
-  }.otherwise{
-    io.readData2 := registers.io.readData2
-  }
+  // when(zeroRs2.asBool){
+  //   io.readData2 := io.writeData
+  // }.otherwise{
+  //   io.readData2 := registers.io.readData2
+  // }
   /////////////////////////////////////////
   
-  // io.readData1 := registers.io.readData1  
-  // io.readData2 := registers.io.readData2
+  io.readData1 := registers.io.readData1  
+  io.readData2 := registers.io.readData2
 
   io.rs1Address := io.instruction_In.registerRs1
   io.rs2Address := io.instruction_In.registerRs2
