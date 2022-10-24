@@ -56,33 +56,33 @@ class Execute extends MultiIOModule {
   //////////////////// FORWARDING UNIT /////////////////////
   //////////////////////////////////////////////////////////
 
-  val rs1 = Wire(UInt(32.W))
-  val rs2 = Wire(UInt(32.W))
-  val mem1 = Wire(UInt(5.W))
-  val mem2 = Wire(UInt(5.W))
-  val wb1  = Wire(UInt(5.W))
-  val wb2  = Wire(UInt(5.W))
+  // val rs1 = Wire(UInt(32.W))
+  // val rs2 = Wire(UInt(32.W))
+  // val mem1 = Wire(UInt(5.W))
+  // val mem2 = Wire(UInt(5.W))
+  // val wb1  = Wire(UInt(5.W))
+  // val wb2  = Wire(UInt(5.W))
 
-  mem1 := io.rs1Address_In - io.MEMrdAddress_In
-  mem2 := io.rs2Address_In - io.MEMrdAddress_In
-  wb1  := io.rs1Address_In - io.WBrdAddress_In
-  wb2  := io.rs2Address_In - io.WBrdAddress_In
+  // mem1 := io.rs1Address_In - io.MEMrdAddress_In
+  // mem2 := io.rs2Address_In - io.MEMrdAddress_In
+  // wb1  := io.rs1Address_In - io.WBrdAddress_In
+  // wb2  := io.rs2Address_In - io.WBrdAddress_In
 
-  val zeroMem1 = Wire(UInt(1.W))
-  val zeroMem2 = Wire(UInt(1.W))
-  val zeroMemMap = Array(
-    0.U(32.W)      -> 1.U(1.W)
-   ) 
-  zeroMem1 := MuxLookup(mem1, 0.U(1.W), zeroMemMap)
-  zeroMem2 := MuxLookup(mem2, 0.U(1.W), zeroMemMap)
+  // val zeroMem1 = Wire(UInt(1.W))
+  // val zeroMem2 = Wire(UInt(1.W))
+  // val zeroMemMap = Array(
+  //   0.U(32.W)      -> 1.U(1.W)
+  //  ) 
+  // zeroMem1 := MuxLookup(mem1, 0.U(1.W), zeroMemMap)
+  // zeroMem2 := MuxLookup(mem2, 0.U(1.W), zeroMemMap)
 
-  val zeroWb1 = Wire(UInt(1.W))
-  val zeroWb2 = Wire(UInt(1.W))
-  val zeroWbMap = Array(
-    0.U(32.W)      -> 1.U(1.W)
-   ) 
-  zeroWb1 := MuxLookup(wb1, 0.U(1.W), zeroWbMap)
-  zeroWb2 := MuxLookup(wb2, 0.U(1.W), zeroWbMap)
+  // val zeroWb1 = Wire(UInt(1.W))
+  // val zeroWb2 = Wire(UInt(1.W))
+  // val zeroWbMap = Array(
+  //   0.U(32.W)      -> 1.U(1.W)
+  //  ) 
+  // zeroWb1 := MuxLookup(wb1, 0.U(1.W), zeroWbMap)
+  // zeroWb2 := MuxLookup(wb2, 0.U(1.W), zeroWbMap)
 
   // val stalled = Wire(UInt(1.W))
   // when(zeroMem1.asBool){
@@ -110,32 +110,32 @@ class Execute extends MultiIOModule {
   //   }
   // }
 
-  when(zeroMem1.asBool){
-    rs1 := io.MEMaluResult_in
-  }.otherwise{
-    when(zeroWb1.asBool){
-      rs1 := io.WBaluResult_in
-    }.otherwise{
-      rs1 := io.readData1
-    }
-  }
+  // when(zeroMem1.asBool){
+  //   rs1 := io.MEMaluResult_in
+  // }.otherwise{
+  //   when(zeroWb1.asBool){
+  //     rs1 := io.WBaluResult_in
+  //   }.otherwise{
+  //     rs1 := io.readData1
+  //   }
+  // }
 
-  when(zeroMem2.asBool){
-    rs2 := io.MEMaluResult_in
-  }.otherwise{
-    when(zeroWb2.asBool){
-      rs2 := io.WBaluResult_in
-    }.otherwise{
-      rs2 := io.readData2
-    }
-  }
+  // when(zeroMem2.asBool){
+  //   rs2 := io.MEMaluResult_in
+  // }.otherwise{
+  //   when(zeroWb2.asBool){
+  //     rs2 := io.WBaluResult_in
+  //   }.otherwise{
+  //     rs2 := io.readData2
+  //   }
+  // }
 
   val op1 = Wire(SInt(32.W))
   val op2 = Wire(SInt(32.W))
 
   val op1Map = Array(
-    // Op1Select.rs1      -> io.readData1.asSInt,
-    Op1Select.rs1      -> rs1.asSInt,
+    Op1Select.rs1      -> io.readData1.asSInt,
+    // Op1Select.rs1      -> rs1.asSInt,
     Op1Select.PC       -> io.PC_In.asSInt
     )
 
@@ -143,8 +143,8 @@ class Execute extends MultiIOModule {
   // op1 := io.readData1.asSInt
 
   val op2Map = Array(
-    // Op2Select.rs2      -> io.readData2.asSInt,
-    Op2Select.rs2      -> rs2.asSInt,
+    Op2Select.rs2      -> io.readData2.asSInt,
+    // Op2Select.rs2      -> rs2.asSInt,
     Op2Select.imm      -> io.immediate
     )
 
