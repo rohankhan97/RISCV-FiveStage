@@ -138,7 +138,7 @@ class InstructionDecode extends MultiIOModule {
 
   io.PC_Out := io.PC_In
 
-  when(decoder.controlSignals.memRead){
+  when(io.controlSignals.memRead){
     io.insertNOP := 1.U
   }.otherwise{
     io.insertNOP := 0.U
