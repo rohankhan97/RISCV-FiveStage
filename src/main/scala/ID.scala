@@ -138,7 +138,25 @@ class InstructionDecode extends MultiIOModule {
 
   io.PC_Out := io.PC_In
 
-  when(io.controlSignals.memRead){
+  val delayed_rd = RegInit(0.U(5.W))
+  val delayed_CS_reg   = RegInit(0.U(6.W))
+  val delayed_CS_wir   = Wire(new ControlSignals)
+  
+  delayed_rd := io.instruction_In.registerRd
+  delayed_CS_reg := decoder.controlSignals.asUInt
+  delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
+
+  val diff  = Wire(UInt(5.W))
+  diff  := io.rs1Address - delayed_rd
+
+  val zeroWb2 = Wire(UInt(1.W))
+  val zeroWbMap = Array(
+    0.U(32.W)      -> 1.U(1.W)
+   ) 
+  zeroWb2 := MuxLookup(diff, 0.U(1.W), zeroWbMap)
+
+
+  when(zeroWb2.asBool & delayed_CS_wir.memRead){
     io.insertNOP := 1.U
   }.otherwise{
     io.insertNOP := 0.U
