@@ -21,14 +21,14 @@ object Manifest {
 
   val singleTest = "load.s"
 
-  val nopPadded = false
+  val nopPadded = true
 
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
     printErrors        = true,
-    printParsedProgram = true, //
-    printVMtrace       = true, //
-    printVMfinal       = true, //
+    printParsedProgram = false, 
+    printVMtrace       = false, 
+    printVMfinal       = false, 
     printMergedTrace   = true, 
     printBinary        = false,
     nopPadded          = nopPadded,
