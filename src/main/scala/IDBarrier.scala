@@ -22,7 +22,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
       val rdAddress_In    = Input(UInt(5.W))
       val PC_In           = Input(UInt(32.W))
 
-      val notStall        = Input(UInt(1.W))
+      // val notStall        = Input(UInt(1.W))
 
       val controlSignals_Out = Output(new ControlSignals)
       val branchType_Out     = Output(UInt(4.W))
@@ -57,7 +57,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
   val rdAddress        = RegInit(0.U(5.W))
   val PC               = RegInit(0.U(32.W))
 
-  when(io.notStall.asBool){
+  // when(io.notStall.asBool){
     controlSignals  := io.controlSignals_In.asUInt
     branchType      := io.branchType_In
     op1Select       := io.op1Select_In
@@ -73,7 +73,7 @@ class InstructionDecodeBarrier extends MultiIOModule {
     rs2Address      := io.rs2Address_In
     rdAddress       := io.rdAddress_In
     PC              := io.PC_In
-  }
+  // }
 
   io.controlSignals_Out  := controlSignals.asTypeOf(new ControlSignals)
   io.branchType_Out      := branchType    

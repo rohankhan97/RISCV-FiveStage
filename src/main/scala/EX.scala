@@ -47,7 +47,7 @@ class Execute extends MultiIOModule {
 
       val branchResult = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
-      val notStall   = Output(UInt(1.W))
+      // val notStall   = Output(UInt(1.W))
 
     }
   )

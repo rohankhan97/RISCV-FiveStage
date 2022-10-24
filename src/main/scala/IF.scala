@@ -25,7 +25,7 @@ class InstructionFetch extends MultiIOModule {
     new Bundle {
       val adderIn      = Input(UInt(32.W))
       val branchResult = Input(UInt(1.W))
-      val notStall     = Input(UInt(1.W))
+      // val notStall     = Input(UInt(1.W))
 
       val PC          = Output(UInt())
       val instruction = Output(new Instruction)
@@ -50,13 +50,19 @@ class InstructionFetch extends MultiIOModule {
   io.PC := PC
   IMEM.io.instructionAddress := PC
 
-  when(io.notStall.asBool){
-    when(io.branchResult.asBool){
+  // when(io.notStall.asBool){
+  //   when(io.branchResult.asBool){
+  //     PC := io.adderIn
+  //   }.otherwise{
+  //     PC := PC + 4.U
+  //   }
+  // }
+
+  when(io.branchResult.asBool){
       PC := io.adderIn
     }.otherwise{
       PC := PC + 4.U
     }
-  }
   // PC := PC + 4.U
 
   val instruction = Wire(new Instruction)
