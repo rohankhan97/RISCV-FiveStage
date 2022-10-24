@@ -52,34 +52,36 @@ class InstructionFetch extends MultiIOModule {
   io.PC := PC
   IMEM.io.instructionAddress := PC
 
-  // when(io.notStall.asBool){
-  //   when(io.branchResult.asBool){
-  //     PC := io.adderIn
-  //   }.otherwise{
-  //     PC := PC + 4.U
-  //   }
-  // }
-
-  when(io.branchResult.asBool){
+  when(io.insertNOP.asBool){
+    when(io.branchResult.asBool){
       PC := io.adderIn
     }.otherwise{
       PC := PC + 4.U
     }
+  }
+
+  // when(io.branchResult.asBool){
+  //     PC := io.adderIn
+  //   }.otherwise{
+  //     PC := PC + 4.U
+  //   }
+
   // PC := PC + 4.U
 
   val instruction = Wire(new Instruction)
-  // instruction := IMEM.io.instruction.asTypeOf(new Instruction)
+  instruction := IMEM.io.instruction.asTypeOf(new Instruction)
+  
   // when(io.insertNOP.asBool){
   //   instruction := Instruction.NOP
   // }.otherwise{
   //   instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   // }
 
-  val instMap = Array(
-    0.U(1.W)      -> IMEM.io.instruction.asTypeOf(new Instruction),
-    1.U(1.W)      -> Instruction.NOP
-   )
-  instruction := MuxLookup(io.insertNOP, Instruction.NOP, instMap)
+  // val instMap = Array(
+  //   0.U(1.W)      -> IMEM.io.instruction.asTypeOf(new Instruction),
+  //   1.U(1.W)      -> Instruction.NOP
+  //  )
+  // instruction := MuxLookup(io.insertNOP, Instruction.NOP, instMap)
 
   // io.instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   io.instruction := instruction

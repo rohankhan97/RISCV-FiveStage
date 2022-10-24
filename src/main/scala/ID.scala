@@ -157,9 +157,9 @@ class InstructionDecode extends MultiIOModule {
 
 
   when(zeroWb2.asBool & delayed_CS_wir.memRead){
-    io.insertNOP := 1.U
-  }.otherwise{
     io.insertNOP := 0.U
+  }.otherwise{
+    io.insertNOP := 1.U
   }
 
 }
