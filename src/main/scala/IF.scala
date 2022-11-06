@@ -64,11 +64,13 @@ class InstructionFetch extends MultiIOModule {
   //   }
   // }
 
-  when(io.branchResult.asBool){
+  when(NOP.asBool){
+    when(io.branchResult.asBool){
       PC := io.adderIn
     }.otherwise{
       PC := PC + 4.U
     }
+  }
 
   // PC := PC + 4.U
 
