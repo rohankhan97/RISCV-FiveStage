@@ -36,6 +36,10 @@ class InstructionFetch extends MultiIOModule {
   val IMEM = Module(new IMEM)
   val PC   = RegInit(UInt(32.W), 0.U)
 
+  val NOP = RegInit(UInt(1.W), 0.U)
+
+  NOP := io.insertNOP
+
 
   /**
     * Setup. You should not change this code
@@ -71,7 +75,7 @@ class InstructionFetch extends MultiIOModule {
   val instruction = Wire(new Instruction)
   instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   
-  when(io.insertNOP.asBool){
+  when(NOP.asBool){
     instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   }.otherwise{
     instruction := Instruction.NOP
