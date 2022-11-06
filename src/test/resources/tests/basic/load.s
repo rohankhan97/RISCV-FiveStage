@@ -23,7 +23,6 @@ main:
 	nop
 	lw x2, 0(x2)
 	nop
-	nop
 	lw x1, 0(x1)
 	lw x1, 0(x1)
 	lw x1, 0(x1)
