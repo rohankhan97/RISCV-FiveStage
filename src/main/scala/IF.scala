@@ -70,7 +70,7 @@ class InstructionFetch extends MultiIOModule {
       PC := PC + 4.U
     }
   }.otherwise{
-    PC := PC
+    PC := PC - 4.U
   }
 
   // PC := PC + 4.U
