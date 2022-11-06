@@ -54,7 +54,6 @@ class InstructionFetch extends MultiIOModule {
     * You should expand on or rewrite the code below.
     */
   io.PC := PC
-  IMEM.io.instructionAddress := PC
 
   // when(io.insertNOP.asBool){
   //   when(io.branchResult.asBool){
@@ -80,6 +79,7 @@ class InstructionFetch extends MultiIOModule {
   // instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   
   when(NOP.asBool){
+    IMEM.io.instructionAddress := PC
     instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   }.otherwise{
     instruction := Instruction.NOP

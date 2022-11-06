@@ -27,8 +27,6 @@ main:
 	lw x1, 0(x1)
 	lw x1, 0(x1)
 	lw x1, 0(x1)
-	addi x3, zero, 4 
-	addi x4, zero, 4
 	done
 #memset 0x0,  4
 #memset 0x4,  8
