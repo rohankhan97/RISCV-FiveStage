@@ -162,11 +162,11 @@ class InstructionDecode extends MultiIOModule {
   //   io.insertNOP := 1.U
   // }
 
-  when(decoder.controlSignals.memRead){
-    io.insertNOP := 0.U
-  }.otherwise{
-    io.insertNOP := 1.U
-  }
+  // when(decoder.controlSignals.memRead){
+  //   io.insertNOP := 0.U
+  // }.otherwise{
+  //   io.insertNOP := 1.U
+  // }
 
   // val instMap = Array(
   //   1.U(1.W)    -> 0.U(1.W)

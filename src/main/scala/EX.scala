@@ -47,7 +47,7 @@ class Execute extends MultiIOModule {
 
       val branchResult = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
-      // val notStall   = Output(UInt(1.W))
+      val notStall   = Output(UInt(1.W))
 
     }
   )
@@ -83,6 +83,12 @@ class Execute extends MultiIOModule {
    ) 
   zeroWb1 := MuxLookup(wb1, 1.U(1.W), zeroWbMap)
   zeroWb2 := MuxLookup(wb2, 1.U(1.W), zeroWbMap)
+
+  val delayed_CS_reg   = RegInit(0.U(6.W))
+  val delayed_CS_wir   = Wire(new ControlSignals)
+
+  delayed_CS_reg := decoder.controlSignals.asUInt
+  delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
 
   // val stalled = Wire(UInt(1.W))
   // when(zeroMem1.asBool){
@@ -126,8 +132,15 @@ class Execute extends MultiIOModule {
     }.otherwise{
       rs1 := io.WBaluResult_in
     }
+    io.notStall := 1.U
   }.otherwise{
-    rs1 := io.MEMaluResult_in
+    when(delayed_CS_wir.memRead){
+      rs1 := io.WBaluResult_in
+      io.notStall := 0.U
+    }.otherwise{
+      rs1 := io.MEMaluResult_in
+      io.notStall := 1.U
+    }
   }
 
   // when(zeroMem2.asBool){
@@ -146,8 +159,15 @@ class Execute extends MultiIOModule {
     }.otherwise{
       rs2 := io.WBaluResult_in
     }
+    io.notStall := 1.U
   }.otherwise{
-    rs2 := io.MEMaluResult_in
+    when(delayed_CS_wir.memRead){
+      rs2 := io.WBaluResult_in
+      io.notStall := 0.U
+    }.otherwise{
+      rs2 := io.MEMaluResult_in
+      io.notStall := 1.U
+    }
   }
 
   val op1 = Wire(SInt(32.W))
