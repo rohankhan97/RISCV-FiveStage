@@ -27,7 +27,7 @@ class InstructionFetch extends MultiIOModule {
       val adderIn      = Input(UInt(32.W))
       val branchResult = Input(UInt(1.W))
       // val notStall     = Input(UInt(1.W))
-      val insertNOP    = Input(UInt(1.W))
+      // val insertNOP    = Input(UInt(1.W))
 
       val PC          = Output(UInt())
       val instruction = Output(new Instruction)
@@ -36,9 +36,9 @@ class InstructionFetch extends MultiIOModule {
   val IMEM = Module(new IMEM)
   val PC   = RegInit(UInt(32.W), 0.U)
 
-  val NOP = RegInit(UInt(1.W), 0.U)
+  // val NOP = RegInit(UInt(1.W), 0.U)
 
-  NOP := io.insertNOP
+  // NOP := io.insertNOP
 
 
   /**

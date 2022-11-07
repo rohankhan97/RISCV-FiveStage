@@ -46,7 +46,7 @@ class InstructionDecode extends MultiIOModule {
 
       val PC_Out       = Output(UInt(32.W))
 
-      val insertNOP    = Output(UInt(1.W))
+      // val insertNOP    = Output(UInt(1.W))
     }
   )
 
