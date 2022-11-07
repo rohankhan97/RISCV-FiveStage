@@ -159,14 +159,14 @@ class Execute extends MultiIOModule {
     }.otherwise{
       rs2 := io.WBaluResult_in
     }
-    io.notStall := 1.U
+    // io.notStall := 1.U
   }.otherwise{
-    when(delayed_CS_wir.memRead){
-      rs2 := io.WBaluResult_in
-      io.notStall := 0.U
-    }.otherwise{
-      rs2 := io.MEMaluResult_in
-      io.notStall := 1.U
+    // when(delayed_CS_wir.memRead){
+    //   rs2 := io.WBaluResult_in
+    //   io.notStall := 0.U
+    // }.otherwise{
+    rs2 := io.MEMaluResult_in
+      // io.notStall := 1.U
     }
   }
 
