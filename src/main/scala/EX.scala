@@ -73,16 +73,16 @@ class Execute extends MultiIOModule {
   val zeroMemMap = Array(
     0.U(32.W)      -> 0.U(1.W)
    ) 
-  zeroMem1 := MuxLookup(mem1, 0.U(1.W), zeroMemMap)
-  zeroMem2 := MuxLookup(mem2, 0.U(1.W), zeroMemMap)
+  zeroMem1 := MuxLookup(mem1, 1.U(1.W), zeroMemMap)
+  zeroMem2 := MuxLookup(mem2, 1.U(1.W), zeroMemMap)
 
   val zeroWb1 = Wire(UInt(1.W))
   val zeroWb2 = Wire(UInt(1.W))
   val zeroWbMap = Array(
     0.U(32.W)      -> 0.U(1.W)
    ) 
-  zeroWb1 := MuxLookup(wb1, 0.U(1.W), zeroWbMap)
-  zeroWb2 := MuxLookup(wb2, 0.U(1.W), zeroWbMap)
+  zeroWb1 := MuxLookup(wb1, 1.U(1.W), zeroWbMap)
+  zeroWb2 := MuxLookup(wb2, 1.U(1.W), zeroWbMap)
 
   // val stalled = Wire(UInt(1.W))
   // when(zeroMem1.asBool){
