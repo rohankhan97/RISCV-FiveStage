@@ -87,7 +87,7 @@ class Execute extends MultiIOModule {
   val delayed_CS_reg   = RegInit(0.U(6.W))
   val delayed_CS_wir   = Wire(new ControlSignals)
 
-  delayed_CS_reg := decoder.controlSignals.asUInt
+  delayed_CS_reg := io.controlSignals_In.asUInt
   delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
 
   // val stalled = Wire(UInt(1.W))
