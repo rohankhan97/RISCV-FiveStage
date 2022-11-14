@@ -142,7 +142,11 @@ class Execute extends MultiIOModule {
       io.notStall := 0.U
       stalled_not := 0.U
     }.otherwise{
-      rs1 := io.MEMaluResult_in
+      when(stalled_not.asBool){
+        rs1 := io.MEMaluResult_in
+      }.otherwise{
+        rs1 := io.WBaluResult_in
+      }
       io.notStall := 1.U
       stalled_not := 1.U
     }
