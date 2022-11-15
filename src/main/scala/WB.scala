@@ -4,7 +4,7 @@ import chisel3.util.{ BitPat, MuxCase }
 import chisel3.experimental.MultiIOModule
 
 
-class WriteBack extends MultiIOModule {
+class WriteBacK extends MultiIOModule {
 
   val io = IO(
     new Bundle {
@@ -18,18 +18,19 @@ class WriteBack extends MultiIOModule {
 
       val controlSignals_Out = Output(new ControlSignals)
       val rdData_Out         = Output(UInt(32.W))
+      // val dataOut_Out        = Output(UInt(32.W))
       val rdAddress_Out      = Output(UInt(5.W))
 
     }
   )
 
-   when(io.controlSignals_In.memtoReg){
+  when(io.controlSignals_In.memtoReg){
     io.rdData_Out := io.dataOut_In
   }.otherwise{
     io.rdData_Out := io.aluResult_In
   }
 
   io.controlSignals_Out := io.controlSignals_In
-  io.rdAddress_Out      := io.rdAddress_In
+  io.rdAddress_Out := io.rdAddress_In
  
 }

@@ -30,7 +30,7 @@ class CPU extends MultiIOModule {
   val IF  = Module(new InstructionFetch)
   val EX  = Module(new Execute)
   val MEM = Module(new MemoryFetch)
-  val WB  = Module(new WriteBack) 
+  val WB  = Module(new WriteBacK) 
 
 
   /**
