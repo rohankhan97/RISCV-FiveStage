@@ -47,7 +47,7 @@ class Execute extends MultiIOModule {
 
       val branchResult = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
-      val notStall   = Output(UInt(1.W))
+      // val notStall   = Output(UInt(1.W))
 
     }
   )
@@ -126,40 +126,40 @@ class Execute extends MultiIOModule {
   //   }
   // }
 
-  val stalled_not = RegInit(1.U(1.W))
+  // val stalled_not = RegInit(1.U(1.W))
 
-  when(delayed_CS_wir.memRead & stalled_not.asBool){
-      // rs1 := io.WBaluResult_in
-    io.notStall := 0.U
-    stalled_not := 0.U
-  }.otherwise{
-    io.notStall := 1.U
-    stalled_not := 1.U
-  }
+  // when(delayed_CS_wir.memRead & stalled_not.asBool){
+  //     // rs1 := io.WBaluResult_in
+  //   io.notStall := 0.U
+  //   stalled_not := 0.U
+  // }.otherwise{
+  //   io.notStall := 1.U
+  //   stalled_not := 1.U
+  // }
 
-  when(zeroMem1.asBool){
-    when(zeroWb1.asBool){
-      rs1 := io.readData1
-    }.otherwise{
-      rs1 := io.WBaluResult_in
-    }
-    // io.notStall := 1.U
-    // stalled_not := 1.U
-  }.otherwise{
-    when(delayed_CS_wir.memRead & stalled_not.asBool){
-      rs1 := io.WBaluResult_in
-      // io.notStall := 0.U
-      // stalled_not := 0.U
-    }.otherwise{
-      when(stalled_not.asBool){
-        rs1 := io.MEMaluResult_in
-      }.otherwise{
-        rs1 := io.WBaluResult_in
-      }
-      // io.notStall := 1.U
-      // stalled_not := 1.U
-    }
-  }
+  // when(zeroMem1.asBool){
+  //   when(zeroWb1.asBool){
+  //     rs1 := io.readData1
+  //   }.otherwise{
+  //     rs1 := io.WBaluResult_in
+  //   }
+  //   // io.notStall := 1.U
+  //   // stalled_not := 1.U
+  // }.otherwise{
+  //   when(delayed_CS_wir.memRead & stalled_not.asBool){
+  //     rs1 := io.WBaluResult_in
+  //     // io.notStall := 0.U
+  //     // stalled_not := 0.U
+  //   }.otherwise{
+  //     when(stalled_not.asBool){
+  //       rs1 := io.MEMaluResult_in
+  //     }.otherwise{
+  //       rs1 := io.WBaluResult_in
+  //     }
+  //     // io.notStall := 1.U
+  //     // stalled_not := 1.U
+  //   }
+  // }
 
   // when(zeroMem2.asBool){
   //   rs2 := io.MEMaluResult_in
@@ -170,6 +170,16 @@ class Execute extends MultiIOModule {
   //     rs2 := io.readData2
   //   }
   // }
+
+  when(zeroMem1.asBool){
+    when(zeroWb1.asBool){
+      rs1 := io.readData1
+    }.otherwise{
+      rs1 := io.WBaluResult_in
+    }
+  }.otherwise{
+    rs1 := io.MEMaluResult_in
+  }
 
   when(zeroMem2.asBool){
     when(zeroWb2.asBool){

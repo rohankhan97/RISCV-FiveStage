@@ -26,7 +26,7 @@ class InstructionFetch extends MultiIOModule {
     new Bundle {
       val adderIn      = Input(UInt(32.W))
       val branchResult = Input(UInt(1.W))
-      val notStall     = Input(UInt(1.W))         // Not stall indication from ID
+      // val notStall     = Input(UInt(1.W))         // Not stall indication from ID
 
       val PC           = Output(UInt())
       val instruction  = Output(new Instruction)
@@ -45,15 +45,15 @@ class InstructionFetch extends MultiIOModule {
 
   io.PC := PC
 
-  when(io.notStall.asBool){         // Update the PC only when Pipeline is not stalled becasue of load instruction
+  // when(io.notStall.asBool){         // Update the PC only when Pipeline is not stalled becasue of load instruction
     when(io.branchResult.asBool){   
       PC := io.adderIn              // Jump the PC to branch address
     }.otherwise{
       PC := PC + 4.U                // Increment the PC to next instruction
     }
-  }.otherwise{
-    PC := PC                        // Do not update the PC when Pipeline is stalled
-  }
+  // }.otherwise{
+    // PC := PC                        // Do not update the PC when Pipeline is stalled
+  // }
 
 
   val instruction = Wire(new Instruction)
