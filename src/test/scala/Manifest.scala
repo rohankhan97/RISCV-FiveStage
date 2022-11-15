@@ -21,7 +21,7 @@ object Manifest {
 
   val singleTest = "naiveFib.s"
 
-  val nopPadded = true
+  val nopPadded = false
 
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
