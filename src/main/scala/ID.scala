@@ -103,17 +103,17 @@ class InstructionDecode extends MultiIOModule {
   zeroRs1 := MuxLookup(rs1, 0.U(1.W), zeroRsMap)
   zeroRs2 := MuxLookup(rs2, 0.U(1.W), zeroRsMap)
 
-  // when(zeroRs1.asBool){
-  //   io.readData1 := io.writeData
-  // }.otherwise{
+  when(zeroRs1.asBool){
+    io.readData1 := io.writeData
+  }.otherwise{
     io.readData1 := registers.io.readData1
-  // }
+  }
 
-  // when(zeroRs2.asBool){
-  //   io.readData2 := io.writeData
-  // }.otherwise{
+  when(zeroRs2.asBool){
+    io.readData2 := io.writeData
+  }.otherwise{
     io.readData2 := registers.io.readData2
-  // }
+  }
   /////////////////////////////////////////
   
   // io.readData1 := registers.io.readData1  
