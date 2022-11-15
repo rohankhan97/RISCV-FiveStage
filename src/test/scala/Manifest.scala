@@ -58,7 +58,7 @@ class ProfileBranching extends FlatSpec with Matchers {
   it should "profile some branches" in {
     BranchProfiler.profileBranching(
       Manifest.singleTestOptions.copy(testName = "branchProfiling.s", maxSteps = 150000)
-    ) should be(true)
+    ) should be(false)
   }
 }
 
