@@ -18,19 +18,15 @@ class MemoryBarrier extends MultiIOModule {
     })
 
   val controlSignals   = RegInit(0.U(6.W))
-  // val controlSignals   = Wire(new ControlSignals)
   val aluResult        = RegInit(0.U(32.W))
-  // val dataOut          = RegInit(0.U(32.W))
   val rdAddress        = RegInit(0.U(5.W))
 
   controlSignals  := io.controlSignals_In.asUInt
   aluResult       := io.aluResult_In
-  // dataOut         := io.dataOut_In
   rdAddress       := io.rdAddress_In
 
   io.controlSignals_Out  := controlSignals.asTypeOf(new ControlSignals)
   io.dataOut_Out         := io.dataOut_In
   io.aluResult_Out       := aluResult
-
   io.rdAddress_Out       := rdAddress     
 }

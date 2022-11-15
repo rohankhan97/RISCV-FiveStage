@@ -50,15 +50,12 @@ class Decoder() extends Module {
 
     // signal     mem2reg,regWrite,memRead,memWrite,branch,jump, branchType,    Op1Select, Op2Select, ImmSelect,    ALUOp,     PcOpSelect,
     LW     -> List(Y,    Y,       Y,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD, PcOpSelect.DC),
-    // LI     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      ITYPE,      ALUOps.COPY_B, PcOpSelect.DC),
     LUI    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.DC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
     AUIPC  -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.PC,  imm,      UTYPE,      ALUOps.ADD, PcOpSelect.DC),
 
     SW     -> List(N,    N,       N,      Y,       N,     N,   branchType.DC, Op1Select.rs1, imm,      STYPE,      ALUOps.ADD, PcOpSelect.DC),
     JAL    -> List(N,    Y,       N,      N,       N,     Y,   jump,          Op1Select.PC,  imm,      JTYPE,      ALUOps.JAL,  PcOpSelect.PC),
     JALR   -> List(N,    Y,       N,      N,       N,     Y,   jump,          Op1Select.PC, imm,      ITYPE,      ALUOps.JAL,  PcOpSelect.rs1),
-    // J      -> List(N,    N,       N,      N,       N,     Y,   jump,          Op1Select.PC,  imm,      JTYPE,      ALUOps.DC,   PcOpSelect.PC),
-    // JR     -> List(N,    N,       N,      N,       N,     Y,   jump,          Op1Select.rs1, imm,      ITYPE,      ALUOps.ADD,  PcOpSelect.rs1),
 
     BEQ    -> List(N,    N,       N,      N,       Y,     N,   beq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.PC),
     BNE    -> List(N,    N,       N,      N,       Y,     N,   neq,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SUB, PcOpSelect.PC),
@@ -66,10 +63,7 @@ class Decoder() extends Module {
     BGE    -> List(N,    N,       N,      N,       Y,     N,   gte,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.GTE, PcOpSelect.PC), //
     BLTU   -> List(N,    N,       N,      N,       Y,     N,   ltu,           Op1Select.rs1, rs2,      BTYPE,      ALUOps.SLTU, PcOpSelect.PC),
     BGEU   -> List(N,    N,       N,      N,       Y,     N,   gteu,          Op1Select.rs1, rs2,      BTYPE,      ALUOps.GTEU, PcOpSelect.PC), //
-    // BLEZ   -> List(N,    N,       N,      N,       Y,     N,   lte,           Op1Select.rs1, Op2Select.DC, BTYPE,  ALUOps.LEZ, PcOpSelect.DC), //
     
-    // MV     -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
-
     ADD    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.ADD, PcOpSelect.DC),
     ADDI   -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, imm,  ITYPE, ALUOps.ADD, PcOpSelect.DC),
     SUB    -> List(N,    Y,       N,      N,       N,     N,   branchType.DC, Op1Select.rs1, rs2,  ImmFormat.DC, ALUOps.SUB, PcOpSelect.DC),
@@ -91,15 +85,11 @@ class Decoder() extends Module {
     SRLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SRL, PcOpSelect.DC),
     SLL    -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       rs2,       ImmFormat.DC, ALUOps.SLL, PcOpSelect.DC),
     SLLI   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       imm,       ITYPE, ALUOps.SLL, PcOpSelect.DC),
-    // SNEZ   -> List(N,     Y,        N,       N,        N,       N,    branchType.DC, Op1Select.rs1,       Op2Select.DC, ImmFormat.DC, ALUOps.NEZ, PcOpSelect.DC), //
             
-        
-
     /**
       TODO: Fill in the blanks
       */
     )
-
 
   val NOP = List(N, N, N, N, N, N, branchType.DC, Op1Select.rs1, rs2, ImmFormat.DC, ALUOps.DC, PcOpSelect.DC)
 

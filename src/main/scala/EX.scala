@@ -136,7 +136,7 @@ class Execute extends MultiIOModule {
     io.notStall := 1.U
     stalled_not := 1.U
   }
-  
+
   when(zeroMem1.asBool){
     when(zeroWb1.asBool){
       rs1 := io.readData1
@@ -177,15 +177,8 @@ class Execute extends MultiIOModule {
     }.otherwise{
       rs2 := io.WBaluResult_in
     }
-    // io.notStall := 1.U
   }.otherwise{
-    // when(delayed_CS_wir.memRead){
-    //   rs2 := io.WBaluResult_in
-    //   io.notStall := 0.U
-    // }.otherwise{
     rs2 := io.MEMaluResult_in
-      // io.notStall := 1.U
-    // }
   }
 
   val op1 = Wire(SInt(32.W))
@@ -209,25 +202,6 @@ class Execute extends MultiIOModule {
   op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
   // op2 := io.immediate
 
-  // when(io.op2Select.asBool){
-  //   op2 := io.immediate
-  // }.otherwise{
-  //   op2 := io.readData2
-  // }
-
-  // val ALUOpMap = Array(
-  //   ALUOps.ADD      -> (op1 + op2),
-  //   ALUOps.SUB      -> (op1 - op2),
-  //   ALUOps.AND      -> (op1 & op2),
-  //   ALUOps.OR       -> (op1 | op2),
-  //   ALUOps.XOR      -> (op1 ^ op2),
-  //   ALUOps.SLT      -> (op1 < op2).asSInt,
-  //   ALUOps.SLTU     -> (op1.asUInt < op2.asUInt).asSInt,
-  //   ALUOps.SLL      -> (op1.asUInt << op2(4, 0).asUInt).asSInt,
-  //   ALUOps.SRL      -> (op1.asUInt >> op2(4, 0).asUInt).asSInt,
-  //   ALUOps.SRA      -> (op1 >> op2(4, 0).asUInt)
-  //   )
-
   val ALUOpMap = Array(
     ALUOps.ADD      -> (op1 + op2).asUInt,
     ALUOps.SUB      -> (op1 - op2).asUInt,
@@ -246,28 +220,12 @@ class Execute extends MultiIOModule {
     ALUOps.LEZ      -> (op1 <= 0.S).asUInt,
     ALUOps.GEZ      -> (op1 >= 0.S).asUInt,
     ALUOps.JAL      -> (op1 + 4.S).asUInt,
-    // ALUOps.NEZ      -> (op1 =/= 0.S).asUInt,
     ALUOps.COPY_A   -> op1.asUInt,
     ALUOps.COPY_B   -> op2.asUInt
     )
 
-  // val registers = Module(new Registers)
-  // val decoder   = Module(new Decoder).io
-
-  // val controlSignals   = Wire(new ControlSignals)
-
-
-  // reg := op1 < op2
-
-  /**
-    * Setup. You should not change this code
-    */
-  // registers.testHarness.setup := testHarness.registerSetup
-  // testHarness.registerPeek    := registers.io.readData1
-  // testHarness.testUpdates     := registers.testHarness.testUpdates
 
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
-  // io.aluResult := MuxLookup(io.aluOp, 0.S(32.W), ALUOpMap)
 
   val add_op = Wire(SInt(32.W))
 
@@ -286,7 +244,6 @@ class Execute extends MultiIOModule {
   )
 
   io.adderOut := MuxLookup(io.PcOpSelect, 0.U(32.W), PcAddMap)
-  // io.adderOut := (io.PC_In.asSInt + (io.immediate << 1)).asUInt
 
   val zeroReg = Wire(UInt(1.W))
   val LTReg = Wire(UInt(1.W))
@@ -326,10 +283,6 @@ class Execute extends MultiIOModule {
   io.branchResult := (branchReg & io.controlSignals_In.branch) | io.controlSignals_In.jump
 
   io.controlSignals_Out := io.controlSignals_In
-
-  // controlSignals  := io.controlSignals_In
-  // io.controlSignals_Out  := controlSignals
-
 
   io.rdAddress_Out := io.rdAddress_In
  
