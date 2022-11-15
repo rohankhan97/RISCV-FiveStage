@@ -42,7 +42,6 @@ class InstructionDecodeBarrier extends MultiIOModule {
     })
 
   val controlSignals   = RegInit(0.U(6.W)) 
-  // val controlSignals   = Wire(new ControlSignals)
   val branchType       = RegInit(0.U(4.W))
   val op1Select        = RegInit(0.U(1.W))
   val op2Select        = RegInit(0.U(1.W))
