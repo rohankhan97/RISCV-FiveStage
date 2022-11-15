@@ -24,7 +24,7 @@ class InstructionDecode extends MultiIOModule {
       val instruction_In = Input(new Instruction)
       val PC_In = Input(UInt(32.W))
 
-      val controlSignals2 = Input(new ControlSignals)
+      val controlSignals2 = Input(new ControlSignals)  // Control signal coming back for register write back to use write enable signal
       val writeData       = Input(UInt(32.W))
       val rdAddress_In    = Input(UInt(5.W))
 
@@ -46,8 +46,6 @@ class InstructionDecode extends MultiIOModule {
 
       val PC_Out       = Output(UInt(32.W))
 
-      // val insertNOP    = Output(UInt(1.W))
-      // val notStall   = Output(UInt(1.W))
     }
   )
 
@@ -69,18 +67,9 @@ class InstructionDecode extends MultiIOModule {
 
   registers.io.readAddress1 := io.instruction_In.registerRs1
   registers.io.readAddress2 := io.instruction_In.registerRs2
-  // registers.io.writeAddress := io.instruction_In.registerRd
   registers.io.writeAddress := io.rdAddress_In
   registers.io.writeData    := io.writeData
   registers.io.writeEnable  := io.controlSignals2.regWrite
-
-  // registers.io.readAddress1 := 0.U
-  // registers.io.readAddress2 := 0.U
-  // registers.io.writeEnable  := false.B
-  // registers.io.writeAddress := 0.U
-  // registers.io.writeData    := 0.U
-
-  // decoder.instruction := 0.U.asTypeOf(new Instruction)
 
   io.controlSignals := decoder.controlSignals
   io.branchType     := decoder.branchType    
@@ -116,20 +105,15 @@ class InstructionDecode extends MultiIOModule {
   }
   /////////////////////////////////////////
   
-  // io.readData1 := registers.io.readData1  
-  // io.readData2 := registers.io.readData2
-
   io.rs1Address := io.instruction_In.registerRs1
   io.rs2Address := io.instruction_In.registerRs2
   io.rdAddress  := io.instruction_In.registerRd
 
   val immMap = Array(
-    // ALUOps.ADD      -> (io.op1 + io.op2),
     ImmFormat.ITYPE   -> (io.instruction_In.immediateIType),
     ImmFormat.STYPE   -> (io.instruction_In.immediateSType),
     ImmFormat.BTYPE   -> (io.instruction_In.immediateBType),
     ImmFormat.UTYPE   -> (io.instruction_In.immediateUType),
-    // ImmFormat.UTYPE   -> (io.instruction_In.immediateUType << 12),
     ImmFormat.JTYPE   -> (io.instruction_In.immediateJType),
     ImmFormat.SHAMT   -> (io.instruction_In.immediateZType)
     )
@@ -138,52 +122,5 @@ class InstructionDecode extends MultiIOModule {
   io.immediate := MuxLookup(decoder.immType, 0.S(32.W), immMap)
 
   io.PC_Out := io.PC_In
-
-  // val delayed_rd = RegInit(0.U(5.W))
-  val delayed_CS_reg   = RegInit(0.U(6.W))
-  val delayed_CS_wir   = Wire(new ControlSignals)
-  val stalled_not = RegInit(1.U(1.W))
-  
-  // delayed_rd := io.instruction_In.registerRd
-  delayed_CS_reg := decoder.controlSignals.asUInt
-  delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
-
-  // when(delayed_CS_wir.memRead & stalled_not.asBool){
-  // when(decoder.controlSignals.memRead & stalled_not.asBool){
-  //     // rs1 := io.WBaluResult_in
-  //   io.notStall := 0.U
-  //   stalled_not := 0.U
-  // }.otherwise{
-  //   io.notStall := 1.U
-  //   stalled_not := 1.U
-  // }
-
-  // val diff  = Wire(UInt(5.W))
-  // diff  := io.rs1Address - delayed_rd
-
-  // val zeroWb2 = Wire(UInt(1.W))
-  // val zeroWbMap = Array(
-  //   0.U(32.W)      -> 1.U(1.W)
-  //  ) 
-  // zeroWb2 := MuxLookup(diff, 0.U(1.W), zeroWbMap)
-
-
-  // when(zeroWb2.asBool & delayed_CS_wir.memRead){
-  //   io.insertNOP := 0.U
-  // }.otherwise{
-  //   io.insertNOP := 1.U
-  // }
-
-  // when(decoder.controlSignals.memRead){
-  //   io.insertNOP := 0.U
-  // }.otherwise{
-  //   io.insertNOP := 1.U
-  // }
-
-  // val instMap = Array(
-  //   1.U(1.W)    -> 0.U(1.W)
-  // )
-
-  // io.insertNOP := MuxLookup(decoder.controlSignals.memRead, 0.U(1.W), instMap)
 
 }

@@ -13,8 +13,6 @@ class ExecuteBarrier extends MultiIOModule {
       val adderOut_In       = Input(UInt(32.W))
       val branchResult_In   = Input(UInt(1.W))
 
-      // val notStall          = Input(UInt(1.W))
-
       val controlSignals_Out = Output(new ControlSignals)
       val dataIn_Out         = Output(UInt(32.W))
       val dataAddress_Out    = Output(UInt(32.W))
@@ -30,14 +28,12 @@ class ExecuteBarrier extends MultiIOModule {
   val adderOut         = RegInit(0.U(32.W))
   val branchResult     = RegInit(0.U(1.W))
 
-  // when(io.notStall.asBool){
-    controlSignals  := io.controlSignals_In.asUInt
-    dataIn          := io.dataIn_In
-    dataAddress     := io.dataAddress_In
-    rdAddress       := io.rdAddress_In
-    adderOut        := io.adderOut_In
-    branchResult    := io.branchResult_In
-  // }
+  controlSignals  := io.controlSignals_In.asUInt
+  dataIn          := io.dataIn_In
+  dataAddress     := io.dataAddress_In
+  rdAddress       := io.rdAddress_In
+  adderOut        := io.adderOut_In
+  branchResult    := io.branchResult_In
 
   io.controlSignals_Out  := controlSignals.asTypeOf(new ControlSignals)
   io.dataIn_Out          := dataIn     

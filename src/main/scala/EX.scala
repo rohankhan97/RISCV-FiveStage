@@ -23,31 +23,29 @@ class Execute extends MultiIOModule {
         */
       val controlSignals_In = Input(new ControlSignals)
 
-      val readData1 = Input(UInt(32.W))
-      val readData2 = Input(UInt(32.W))
-      val immediate = Input(SInt(32.W))
-      val PC_In     = Input(UInt(32.W))
-      val op1Select = Input(UInt(1.W))
-      val op2Select = Input(UInt(1.W))
-      val PcOpSelect = Input(UInt(1.W))
-      val aluOp     = Input(UInt(5.W))
-      val branchType_In     = Input(UInt(4.W))
+      val readData1       = Input(UInt(32.W))
+      val readData2       = Input(UInt(32.W))
+      val immediate       = Input(SInt(32.W))
+      val PC_In           = Input(UInt(32.W))
+      val op1Select       = Input(UInt(1.W))
+      val op2Select       = Input(UInt(1.W))
+      val PcOpSelect      = Input(UInt(1.W))
+      val aluOp           = Input(UInt(5.W))
+      val branchType_In   = Input(UInt(4.W))
 
-      val aluResult = Output(UInt(32.W))
-      val adderOut  = Output(UInt(32.W))
-      val MEMaluResult_in = Input(UInt(32.W))
-      val WBaluResult_in  = Input(UInt(32.W))
-
-      val rs1Address_In = Input(UInt(5.W))
-      val rs2Address_In = Input(UInt(5.W))
-      val rdAddress_In  = Input(UInt(5.W))
-      val rdAddress_Out = Output(UInt(5.W))
+      val rs1Address_In    = Input(UInt(5.W))
+      val rs2Address_In    = Input(UInt(5.W))
+      val rdAddress_In     = Input(UInt(5.W))
       val MEMrdAddress_In  = Input(UInt(5.W))
       val WBrdAddress_In   = Input(UInt(5.W))
+      val MEMaluResult_in  = Input(UInt(32.W))
+      val WBaluResult_in   = Input(UInt(32.W))
 
-      val branchResult = Output(UInt(1.W))
+      val aluResult          = Output(UInt(32.W))
+      val adderOut           = Output(UInt(32.W))      // Resulting PC for next instruction
+      val rdAddress_Out      = Output(UInt(5.W))
+      val branchResult       = Output(UInt(1.W))
       val controlSignals_Out = Output(new ControlSignals)
-      // val notStall   = Output(UInt(1.W))
 
     }
   )
@@ -84,92 +82,12 @@ class Execute extends MultiIOModule {
   zeroWb1 := MuxLookup(wb1, 1.U(1.W), zeroWbMap)
   zeroWb2 := MuxLookup(wb2, 1.U(1.W), zeroWbMap)
 
-  val delayed_CS_reg   = RegInit(0.U(6.W))
-  val delayed_CS_wir   = Wire(new ControlSignals)
+  // val delayed_CS_reg   = RegInit(0.U(6.W))
+  // val delayed_CS_wir   = Wire(new ControlSignals)
 
-  delayed_CS_reg := io.controlSignals_In.asUInt
-  delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
+  // delayed_CS_reg := io.controlSignals_In.asUInt
+  // delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
 
-  // val stalled = Wire(UInt(1.W))
-  // when(zeroMem1.asBool){
-  //   when(io.controlSignals_In.memRead){
-  //     when(stalled.asBool){
-  //       io.notStall := 0.U
-  //       stalled := 0.U
-  //     }.otherwise{
-  //       io.notStall := 1.U
-  //       stalled := 1.U
-  //     }
-  //     rs1 := io.WBaluResult_in
-  //   }.otherwise{
-  //     io.notStall := 1.U
-  //     rs1 := io.MEMaluResult_in
-  //     stalled := 1.U
-  //   }
-  // }.otherwise{
-  //   io.notStall := 1.U
-  //   stalled := 1.U
-  //   when(zeroWb1.asBool){
-  //     rs1 := io.WBaluResult_in
-  //   }.otherwise{
-  //     rs1 := io.readData1
-  //   }
-  // }
-
-  // when(zeroMem1.asBool){
-  //   rs1 := io.MEMaluResult_in
-  // }.otherwise{
-  //   when(zeroWb1.asBool){
-  //     rs1 := io.WBaluResult_in
-  //   }.otherwise{
-  //     rs1 := io.readData1
-  //   }
-  // }
-
-  // val stalled_not = RegInit(1.U(1.W))
-
-  // when(delayed_CS_wir.memRead & stalled_not.asBool){
-  //     // rs1 := io.WBaluResult_in
-  //   io.notStall := 0.U
-  //   stalled_not := 0.U
-  // }.otherwise{
-  //   io.notStall := 1.U
-  //   stalled_not := 1.U
-  // }
-
-  // when(zeroMem1.asBool){
-  //   when(zeroWb1.asBool){
-  //     rs1 := io.readData1
-  //   }.otherwise{
-  //     rs1 := io.WBaluResult_in
-  //   }
-  //   // io.notStall := 1.U
-  //   // stalled_not := 1.U
-  // }.otherwise{
-  //   when(delayed_CS_wir.memRead & stalled_not.asBool){
-  //     rs1 := io.WBaluResult_in
-  //     // io.notStall := 0.U
-  //     // stalled_not := 0.U
-  //   }.otherwise{
-  //     when(stalled_not.asBool){
-  //       rs1 := io.MEMaluResult_in
-  //     }.otherwise{
-  //       rs1 := io.WBaluResult_in
-  //     }
-  //     // io.notStall := 1.U
-  //     // stalled_not := 1.U
-  //   }
-  // }
-
-  // when(zeroMem2.asBool){
-  //   rs2 := io.MEMaluResult_in
-  // }.otherwise{
-  //   when(zeroWb2.asBool){
-  //     rs2 := io.WBaluResult_in
-  //   }.otherwise{
-  //     rs2 := io.readData2
-  //   }
-  // }
 
   when(zeroMem1.asBool){
     when(zeroWb1.asBool){
@@ -195,22 +113,18 @@ class Execute extends MultiIOModule {
   val op2 = Wire(SInt(32.W))
 
   val op1Map = Array(
-    // Op1Select.rs1      -> io.readData1.asSInt,
     Op1Select.rs1      -> rs1.asSInt,
     Op1Select.PC       -> io.PC_In.asSInt
     )
 
   op1 := MuxLookup(io.op1Select, 0.S(32.W), op1Map)
-  // op1 := io.readData1.asSInt
 
   val op2Map = Array(
-    // Op2Select.rs2      -> io.readData2.asSInt,
     Op2Select.rs2      -> rs2.asSInt,
     Op2Select.imm      -> io.immediate
     )
 
   op2 := MuxLookup(io.op2Select, 0.S(32.W), op2Map)
-  // op2 := io.immediate
 
   val ALUOpMap = Array(
     ALUOps.ADD      -> (op1 + op2).asUInt,
@@ -234,49 +148,43 @@ class Execute extends MultiIOModule {
     ALUOps.COPY_B   -> op2.asUInt
     )
 
-
   io.aluResult := MuxLookup(io.aluOp, 0.U(32.W), ALUOpMap)
 
+  // Decide what to add in PC depending on regular instruction or jump/branch instruction
   val add_op = Wire(SInt(32.W))
-
   val addMap = Array(
     PcOpSelect.PC       -> io.PC_In.asSInt,
     PcOpSelect.rs1      -> io.readData1.asSInt
     )
-
   add_op := MuxLookup(io.PcOpSelect, 0.S(32.W), addMap)
 
   val constant = 4294967294l.U(32.W)
-
   val PcAddMap = Array(
     PcOpSelect.PC      -> (add_op + (io.immediate)).asUInt,
     PcOpSelect.rs1     -> ((add_op + (io.immediate)) & constant.asSInt).asUInt
   )
-
   io.adderOut := MuxLookup(io.PcOpSelect, 0.U(32.W), PcAddMap)
 
-  val zeroReg = Wire(UInt(1.W))
-  val LTReg = Wire(UInt(1.W))
-  val unEqReg = Wire(UInt(1.W))
+  // Logic for branch signals
+  val zeroReg = Wire(UInt(1.W))  // for zero
+  val LTReg   = Wire(UInt(1.W))  // for less-than
+  val unEqReg = Wire(UInt(1.W))  // for unequal
 
   val branchReg = Wire(UInt(1.W))
 
   val ZeroMap = Array(
     0.U(32.W)      -> 1.U(1.W)
    ) 
-
   zeroReg := MuxLookup(io.aluResult, 0.U(1.W), ZeroMap)
 
   val LTMap = Array(
     1.U(32.W)      -> 1.U(1.W)
    ) 
-
   LTReg := MuxLookup(io.aluResult, 0.U(1.W), LTMap)
 
   val unEqMap = Array(
     0.U(32.W)      -> 0.U(1.W)
    ) 
-
   unEqReg := MuxLookup(io.aluResult, 1.U(1.W), unEqMap)
 
   val branchMap = Array(
@@ -287,13 +195,11 @@ class Execute extends MultiIOModule {
     branchType.gte      -> LTReg,
     branchType.gteu     -> LTReg
    )
-
   branchReg := MuxLookup(io.branchType_In, 0.U(1.W), branchMap)
 
   io.branchResult := (branchReg & io.controlSignals_In.branch) | io.controlSignals_In.jump
 
   io.controlSignals_Out := io.controlSignals_In
-
   io.rdAddress_Out := io.rdAddress_In
  
 }
