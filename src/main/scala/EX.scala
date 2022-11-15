@@ -82,13 +82,7 @@ class Execute extends MultiIOModule {
   zeroWb1 := MuxLookup(wb1, 1.U(1.W), zeroWbMap)
   zeroWb2 := MuxLookup(wb2, 1.U(1.W), zeroWbMap)
 
-  // val delayed_CS_reg   = RegInit(0.U(6.W))
-  // val delayed_CS_wir   = Wire(new ControlSignals)
-
-  // delayed_CS_reg := io.controlSignals_In.asUInt
-  // delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
-
-
+  
   when(zeroMem1.asBool){
     when(zeroWb1.asBool){
       rs1 := io.readData1
