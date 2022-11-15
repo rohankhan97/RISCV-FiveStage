@@ -171,25 +171,25 @@ class Execute extends MultiIOModule {
   //   }
   // }
 
-  when(zeroMem1.asBool){
-    when(zeroWb1.asBool){
+  // when(zeroMem1.asBool){
+  //   when(zeroWb1.asBool){
       rs1 := io.readData1
-    }.otherwise{
-      rs1 := io.WBaluResult_in
-    }
-  }.otherwise{
-    rs1 := io.MEMaluResult_in
-  }
+  //   }.otherwise{
+  //     rs1 := io.WBaluResult_in
+  //   }
+  // }.otherwise{
+  //   rs1 := io.MEMaluResult_in
+  // }
 
-  when(zeroMem2.asBool){
-    when(zeroWb2.asBool){
+  // when(zeroMem2.asBool){
+  //   when(zeroWb2.asBool){
       rs2 := io.readData2
-    }.otherwise{
-      rs2 := io.WBaluResult_in
-    }
-  }.otherwise{
-    rs2 := io.MEMaluResult_in
-  }
+  //   }.otherwise{
+  //     rs2 := io.WBaluResult_in
+  //   }
+  // }.otherwise{
+  //   rs2 := io.MEMaluResult_in
+  // }
 
   val op1 = Wire(SInt(32.W))
   val op2 = Wire(SInt(32.W))
