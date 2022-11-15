@@ -47,6 +47,7 @@ class InstructionDecode extends MultiIOModule {
       val PC_Out       = Output(UInt(32.W))
 
       // val insertNOP    = Output(UInt(1.W))
+      val notStall   = Output(UInt(1.W))
     }
   )
 
@@ -139,12 +140,22 @@ class InstructionDecode extends MultiIOModule {
   io.PC_Out := io.PC_In
 
   // val delayed_rd = RegInit(0.U(5.W))
-  // val delayed_CS_reg   = RegInit(0.U(6.W))
-  // val delayed_CS_wir   = Wire(new ControlSignals)
+  val delayed_CS_reg   = RegInit(0.U(6.W))
+  val delayed_CS_wir   = Wire(new ControlSignals)
+  val stalled_not = RegInit(1.U(1.W))
   
   // delayed_rd := io.instruction_In.registerRd
-  // delayed_CS_reg := decoder.controlSignals.asUInt
-  // delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
+  delayed_CS_reg := decoder.controlSignals.asUInt
+  delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
+
+  when(delayed_CS_wir.memRead & stalled_not.asBool){
+      // rs1 := io.WBaluResult_in
+    io.notStall := 0.U
+    stalled_not := 0.U
+  }.otherwise{
+    io.notStall := 1.U
+    stalled_not := 1.U
+  }
 
   // val diff  = Wire(UInt(5.W))
   // diff  := io.rs1Address - delayed_rd
