@@ -26,7 +26,7 @@ class InstructionFetch extends MultiIOModule {
     new Bundle {
       val adderIn      = Input(UInt(32.W))
       val branchResult = Input(UInt(1.W))
-      // val notStall     = Input(UInt(1.W))
+      val notStall     = Input(UInt(1.W))
       // val insertNOP    = Input(UInt(1.W))
 
       val PC          = Output(UInt())
@@ -55,20 +55,22 @@ class InstructionFetch extends MultiIOModule {
     */
   io.PC := PC
 
-  // when(io.insertNOP.asBool){
-  //   when(io.branchResult.asBool){
-  //     PC := io.adderIn
-  //   }.otherwise{
-  //     PC := PC + 4.U
-  //   }
-  // }
-
-  // when(NOP.asBool){
+  when(io.notStall.asBool){
     when(io.branchResult.asBool){
       PC := io.adderIn
     }.otherwise{
       PC := PC + 4.U
     }
+  }.otherwise{
+    PC := PC
+  }
+
+  // when(NOP.asBool){
+    // when(io.branchResult.asBool){
+    //   PC := io.adderIn
+    // }.otherwise{
+    //   PC := PC + 4.U
+    // }
   // }.otherwise{
   //   PC := PC
   // }

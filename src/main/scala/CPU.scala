@@ -157,6 +157,6 @@ class CPU extends MultiIOModule {
   IFBarrier.notStall    := EX.io.notStall
   IDBarrier.notStall    := EX.io.notStall
   EXBarrier.notStall    := EX.io.notStall
-  // IF.io.notStall        := EX.io.notStall
+  IF.io.notStall        := EX.io.notStall
   // IF.io.insertNOP       := ID.io.insertNOP
 }
