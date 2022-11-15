@@ -19,7 +19,7 @@ import LogParser._
 
 object Manifest {
 
-  val singleTest = "naiveFib.s"
+  val singleTest = "add.s"
 
   val nopPadded = false
 
@@ -53,12 +53,11 @@ object Manifest {
 }
 
 
-
 class ProfileBranching extends FlatSpec with Matchers {
   it should "profile some branches" in {
     BranchProfiler.profileBranching(
       Manifest.singleTestOptions.copy(testName = "branchProfiling.s", maxSteps = 150000)
-    ) should be(false)
+    ) should be(true)
   }
 }
 
@@ -66,7 +65,7 @@ class ProfileCache extends FlatSpec with Matchers {
   it should "profile a cache" in {
     CacheProfiler.profileCache(
       Manifest.singleTestOptions.copy(testName = "convolution.s", maxSteps = 150000)
-    ) should be(false)
+    ) should be(true)
   }
 }
 
