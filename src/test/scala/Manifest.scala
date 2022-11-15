@@ -26,9 +26,9 @@ object Manifest {
   val singleTestOptions = TestOptions(
     printIfSuccessful  = true,
     printErrors        = true,
-    printParsedProgram = true, //
-    printVMtrace       = true, //
-    printVMfinal       = true, //
+    printParsedProgram = false, //
+    printVMtrace       = false, //
+    printVMfinal       = false, //
     printMergedTrace   = true, 
     printBinary        = false,
     nopPadded          = nopPadded,
@@ -66,7 +66,7 @@ class ProfileCache extends FlatSpec with Matchers {
   it should "profile a cache" in {
     CacheProfiler.profileCache(
       Manifest.singleTestOptions.copy(testName = "convolution.s", maxSteps = 150000)
-    ) should be(true)
+    ) should be(false)
   }
 }
 
