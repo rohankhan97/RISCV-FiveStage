@@ -26,19 +26,14 @@ class InstructionFetch extends MultiIOModule {
     new Bundle {
       val adderIn      = Input(UInt(32.W))
       val branchResult = Input(UInt(1.W))
-      val notStall     = Input(UInt(1.W))
-      // val insertNOP    = Input(UInt(1.W))
+      val notStall     = Input(UInt(1.W))         // Not stall indication from ID
 
-      val PC          = Output(UInt())
-      val instruction = Output(new Instruction)
+      val PC           = Output(UInt())
+      val instruction  = Output(new Instruction)
     })
 
   val IMEM = Module(new IMEM)
   val PC   = RegInit(UInt(32.W), 0.U)
-
-  // val NOP = RegInit(UInt(1.W), 0.U)
-
-  // NOP := io.notStall
 
 
   /**
@@ -50,43 +45,21 @@ class InstructionFetch extends MultiIOModule {
 
   io.PC := PC
 
-  when(io.notStall.asBool){
-    when(io.branchResult.asBool){
-      PC := io.adderIn
+  when(io.notStall.asBool){         // Update the PC only when Pipeline is not stalled becasue of load instruction
+    when(io.branchResult.asBool){   
+      PC := io.adderIn              // Jump the PC to branch address
     }.otherwise{
-      PC := PC + 4.U
+      PC := PC + 4.U                // Increment the PC to next instruction
     }
   }.otherwise{
-    PC := PC
+    PC := PC                        // Do not update the PC when Pipeline is stalled
   }
 
-  // when(NOP.asBool){
-  //   when(io.branchResult.asBool){
-  //     PC := io.adderIn
-  //   }.otherwise{
-  //     PC := PC + 4.U
-  //   }
-  // }.otherwise{
-  //   PC := PC
-  // }
 
   val instruction = Wire(new Instruction)
   instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   
   IMEM.io.instructionAddress := PC
-  // when(NOP.asBool){
-  //   instruction := IMEM.io.instruction.asTypeOf(new Instruction)
-  // }.otherwise{
-  //   instruction := Instruction.NOP
-  // }
-
-  // val instMap = Array(
-  //   0.U(1.W)      -> IMEM.io.instruction.asTypeOf(new Instruction),
-  //   1.U(1.W)      -> Instruction.NOP
-  //  )
-  // instruction := MuxLookup(io.insertNOP, Instruction.NOP, instMap)
-
-  // io.instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   io.instruction := instruction
 
   /**
