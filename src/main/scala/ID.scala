@@ -148,7 +148,8 @@ class InstructionDecode extends MultiIOModule {
   delayed_CS_reg := decoder.controlSignals.asUInt
   delayed_CS_wir := delayed_CS_reg.asTypeOf(new ControlSignals)
 
-  when(delayed_CS_wir.memRead & stalled_not.asBool){
+  // when(delayed_CS_wir.memRead & stalled_not.asBool){
+  when(decoder.controlSignals.memRead & stalled_not.asBool){
       // rs1 := io.WBaluResult_in
     io.notStall := 0.U
     stalled_not := 0.U
