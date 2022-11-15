@@ -128,27 +128,36 @@ class Execute extends MultiIOModule {
 
   val stalled_not = RegInit(1.U(1.W))
 
+  when(delayed_CS_wir.memRead & stalled_not.asBool){
+      // rs1 := io.WBaluResult_in
+    io.notStall := 0.U
+    stalled_not := 0.U
+  }.otherwise{
+    io.notStall := 1.U
+    stalled_not := 1.U
+  }
+  
   when(zeroMem1.asBool){
     when(zeroWb1.asBool){
       rs1 := io.readData1
     }.otherwise{
       rs1 := io.WBaluResult_in
     }
-    io.notStall := 1.U
-    stalled_not := 1.U
+    // io.notStall := 1.U
+    // stalled_not := 1.U
   }.otherwise{
     when(delayed_CS_wir.memRead & stalled_not.asBool){
       rs1 := io.WBaluResult_in
-      io.notStall := 0.U
-      stalled_not := 0.U
+      // io.notStall := 0.U
+      // stalled_not := 0.U
     }.otherwise{
       when(stalled_not.asBool){
         rs1 := io.MEMaluResult_in
       }.otherwise{
         rs1 := io.WBaluResult_in
       }
-      io.notStall := 1.U
-      stalled_not := 1.U
+      // io.notStall := 1.U
+      // stalled_not := 1.U
     }
   }
 
