@@ -36,9 +36,9 @@ class InstructionFetch extends MultiIOModule {
   val IMEM = Module(new IMEM)
   val PC   = RegInit(UInt(32.W), 0.U)
 
-  // val NOP = RegInit(UInt(1.W), 0.U)
+  val NOP = RegInit(UInt(1.W), 0.U)
 
-  // NOP := io.insertNOP
+  NOP := io.notStall
 
 
   /**
@@ -55,7 +55,17 @@ class InstructionFetch extends MultiIOModule {
     */
   io.PC := PC
 
-  when(io.notStall.asBool){
+  // when(io.notStall.asBool){
+  //   when(io.branchResult.asBool){
+  //     PC := io.adderIn
+  //   }.otherwise{
+  //     PC := PC + 4.U
+  //   }
+  // }.otherwise{
+  //   PC := PC
+  // }
+
+  when(NOP.asBool){
     when(io.branchResult.asBool){
       PC := io.adderIn
     }.otherwise{
@@ -65,23 +75,11 @@ class InstructionFetch extends MultiIOModule {
     PC := PC
   }
 
-  // when(NOP.asBool){
-    // when(io.branchResult.asBool){
-    //   PC := io.adderIn
-    // }.otherwise{
-    //   PC := PC + 4.U
-    // }
-  // }.otherwise{
-  //   PC := PC
-  // }
-
-  // PC := PC + 4.U
-
   val instruction = Wire(new Instruction)
   // instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   
   IMEM.io.instructionAddress := PC
-  when(io.notStall.asBool){
+  when(NOP.asBool){
     instruction := IMEM.io.instruction.asTypeOf(new Instruction)
   }.otherwise{
     instruction := Instruction.NOP
